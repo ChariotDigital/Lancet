@@ -1,4 +1,4 @@
-Lancet
+# Lancet
 
 Freelancing platform with all transaction On-Chain! Get paid for your skills in crypto
 
