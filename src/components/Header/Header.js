@@ -96,11 +96,6 @@ const Header = () => {
                     </a>
                   </li>
                   <li>
-                    <a className="nav-link dropdown-toggle gr-toggle-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/dashboard-main">
-                      My Dashboard
-                    </a>
-                  </li>
-                  <li>
                     <a className="nav-link dropdown-toggle gr-toggle-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/faq">
                       FAQ
                     </a>
@@ -258,13 +253,13 @@ const Header = () => {
               <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
                 <a
                   className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-                  href="/#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    gContext.toggleSignInModal();
-                  }}
+                  href="/dashboard-main"
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   gContext.toggleSignInModal();
+                  // }}
                 >
-                  Log In
+                  Dashboard
                 </a>
                 <a
                   className={`btn btn-${gContext.header.variant} text-uppercase font-size-3`}
