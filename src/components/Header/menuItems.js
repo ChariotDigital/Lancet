@@ -9,6 +9,10 @@ export const menuItems = [
     ],
   },
   {
+    name: "Jobs",
+    label: "Jobs",
+  },
+  {
     name: "pages",
     label: "Pages",
     items: [
