@@ -117,35 +117,35 @@ const SConnectButton = styled.button`
 
 const ConnectButton = (props) => {
 
+
   const { authenticate, isAuthenticated, isAuthenticating, user, account, logout } = useMoralis();
-  const gContext = useContext(GlobalContext);
+  const login = async () => {
+    if (!isAuthenticated) {
 
-    useEffect(() => {
-    if (isAuthenticated) {
-     gContext.toggleSignUpModal()
+      await authenticate({signingMessage: "Sign up to become a buyer on Lancet" })
+        .then(function (user) {
+          console.log("logged in user:", user);
+          console.log(user?.get("ethAddress"));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  }
 
-    const login = async () => {
-      if (!isAuthenticated) {
-
-        await authenticate({signingMessage: "Sign up to become a buyer on Lancet" })
-          .then(function (user) {
-            console.log("logged in user:", user);
-            console.log(user?.get("ethAddress"));
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+  const handleMoralisError = (err) => {
+      switch (err.code) {
+        case Moralis.Error.INVALID_SESSION_TOKEN:
+          Moralis.User.logOut();
+          // If web browser, render a log in screen
+          // If Express.js, redirect the user to the log in route
+          break;
+    
+        // Other Moralis API errors that you want to explicitly handle
       }
     }
 
-    const logOut = async () => {
-      await logout();
-      console.log("logged out");
-    }
-
+  
   return (
     
    <SConnectButtonContainer>
@@ -158,7 +158,7 @@ const ConnectButton = (props) => {
      >
        <SHoverLayer />
        <SIcon />
-       {"Sign Up"}
+       {props.text}
      </SConnectButton>
    </SConnectButtonContainer>
      )
