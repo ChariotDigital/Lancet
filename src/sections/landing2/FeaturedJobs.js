@@ -20,22 +20,15 @@ const FeaturedJobs = () => {
           {/* <!-- Section Title --> */}
           <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
-              <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
-                Featured Jobs
-              </h2>
+              <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">Featured Freelancers</h2>
               <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
-                Leverage agile frameworks to provide a robust synopsis for high
-                level overviews to start.
+                Leverage agile frameworks to provide a robust synopsis for high level overviews to start.
               </p>
             </div>
           </div>
           {/* <!-- Section Title End --> */}
           <div className="row justify-content-center">
-            <div
-              className="col-xxl-9 col-xl-9 col-lg-10 mb-8"
-              data-aos="fade-right"
-              data-aos-duration="800"
-            >
+            <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8" data-aos="fade-right" data-aos-duration="800">
               {/* <!-- Single Featured Job --> */}
               <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
                 <div className="row">
@@ -46,16 +39,12 @@ const FeaturedJobs = () => {
                       </div>
                       <div>
                         <h3 className="mb-0">
-                          <Link href="/#">
-                            <a className="font-size-6 heading-default-color">
-                              UI/UX Designer
-                            </a>
+                          <Link href="/job-details">
+                            <a className="font-size-6 heading-default-color">UI/UX Designer</a>
                           </Link>
                         </h3>
-                        <Link href="/#">
-                          <a className="font-size-3 text-default-color line-height-2">
-                            Apple INC
-                          </a>
+                        <Link href="/company-profile">
+                          <a className="font-size-3 text-default-color line-height-2">Apple INC</a>
                         </Link>
                       </div>
                     </div>
@@ -76,23 +65,17 @@ const FeaturedJobs = () => {
                     <ul className="d-flex list-unstyled mr-n3 flex-wrap">
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Visual Design
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Visual Design</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Wireframing
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Wireframing</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Scrum
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Scrum</a>
                         </Link>
                       </li>
                     </ul>
@@ -138,11 +121,7 @@ const FeaturedJobs = () => {
               </div>
               {/* <!-- End Single Featured Job --> */}
             </div>
-            <div
-              className="col-xxl-9 col-xl-9 col-lg-10 mb-8"
-              data-aos="fade-right"
-              data-aos-duration="800"
-            >
+            <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8" data-aos="fade-right" data-aos-duration="800">
               {/* <!-- Single Featured Job --> */}
               <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
                 <div className="row">
@@ -154,15 +133,11 @@ const FeaturedJobs = () => {
                       <div>
                         <h3 className="mb-0">
                           <Link href="/#">
-                            <a className="font-size-6 heading-default-color">
-                              UI/UX Designer
-                            </a>
+                            <a className="font-size-6 heading-default-color">UI/UX Designer</a>
                           </Link>
                         </h3>
                         <Link href="/#">
-                          <a className="font-size-3 text-default-color line-height-2">
-                            Apple INC
-                          </a>
+                          <a className="font-size-3 text-default-color line-height-2">Apple INC</a>
                         </Link>
                       </div>
                     </div>
@@ -183,23 +158,17 @@ const FeaturedJobs = () => {
                     <ul className="d-flex list-unstyled mr-n3 flex-wrap">
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Agile
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Agile</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Wireframing
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Wireframing</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Prototyping
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Prototyping</a>
                         </Link>
                       </li>
                     </ul>
@@ -245,11 +214,7 @@ const FeaturedJobs = () => {
               </div>
               {/* <!-- End Single Featured Job --> */}
             </div>
-            <div
-              className="col-xxl-9 col-xl-9 col-lg-10 mb-8 aos-init"
-              data-aos="fade-right"
-              data-aos-duration="800"
-            >
+            <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8 aos-init" data-aos="fade-right" data-aos-duration="800">
               {/* <!-- Single Featured Job --> */}
               <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
                 <div className="row">
@@ -261,15 +226,11 @@ const FeaturedJobs = () => {
                       <div>
                         <h3 className="mb-0">
                           <Link href="/#">
-                            <a className="font-size-6 heading-default-color">
-                              iOS Developer
-                            </a>
+                            <a className="font-size-6 heading-default-color">iOS Developer</a>
                           </Link>
                         </h3>
                         <Link href="/#">
-                          <a className="font-size-3 text-default-color line-height-2">
-                            Shopify
-                          </a>
+                          <a className="font-size-3 text-default-color line-height-2">Shopify</a>
                         </Link>
                       </div>
                     </div>
@@ -290,23 +251,17 @@ const FeaturedJobs = () => {
                     <ul className="d-flex list-unstyled mr-n3 flex-wrap">
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Swift
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Swift</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Objective C
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Objective C</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            X Code
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">X Code</a>
                         </Link>
                       </li>
                     </ul>
@@ -352,11 +307,7 @@ const FeaturedJobs = () => {
               </div>
               {/* <!-- End Single Featured Job --> */}
             </div>
-            <div
-              className="col-xxl-9 col-xl-9 col-lg-10 mb-8 aos-init"
-              data-aos="fade-right"
-              data-aos-duration="800"
-            >
+            <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8 aos-init" data-aos="fade-right" data-aos-duration="800">
               {/* <!-- Single Featured Job --> */}
               <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
                 <div className="row">
@@ -368,15 +319,11 @@ const FeaturedJobs = () => {
                       <div>
                         <h3 className="mb-0">
                           <Link href="/#">
-                            <a className="font-size-6 heading-default-color">
-                              Creative Director
-                            </a>
+                            <a className="font-size-6 heading-default-color">Creative Director</a>
                           </Link>
                         </h3>
                         <Link href="/#">
-                          <a className="font-size-3 text-default-color line-height-2">
-                            Facebook
-                          </a>
+                          <a className="font-size-3 text-default-color line-height-2">Facebook</a>
                         </Link>
                       </div>
                     </div>
@@ -397,23 +344,17 @@ const FeaturedJobs = () => {
                     <ul className="d-flex list-unstyled mr-n3 flex-wrap">
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Agile
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Agile</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Wireframing
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Wireframing</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            Prototyping
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">Prototyping</a>
                         </Link>
                       </li>
                     </ul>
@@ -459,11 +400,7 @@ const FeaturedJobs = () => {
               </div>
               {/* <!-- End Single Featured Job --> */}
             </div>
-            <div
-              className="col-xxl-9 col-xl-9 col-lg-10 mb-8 aos-init"
-              data-aos="fade-right"
-              data-aos-duration="800"
-            >
+            <div className="col-xxl-9 col-xl-9 col-lg-10 mb-8 aos-init" data-aos="fade-right" data-aos-duration="800">
               {/* <!-- Single Featured Job --> */}
               <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 light-mode-texts bg-white rounded hover-shadow-3 ">
                 <div className="row">
@@ -475,15 +412,11 @@ const FeaturedJobs = () => {
                       <div>
                         <h3 className="mb-0">
                           <Link href="/#">
-                            <a className="font-size-6 heading-default-color">
-                              Software Engineer
-                            </a>
+                            <a className="font-size-6 heading-default-color">Software Engineer</a>
                           </Link>
                         </h3>
                         <Link href="/#">
-                          <a className="font-size-3 text-default-color line-height-2">
-                            Oculus
-                          </a>
+                          <a className="font-size-3 text-default-color line-height-2">Oculus</a>
                         </Link>
                       </div>
                     </div>
@@ -504,23 +437,17 @@ const FeaturedJobs = () => {
                     <ul className="d-flex list-unstyled mr-n3 flex-wrap">
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            C++
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">C++</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            JavaScprit
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">JavaScprit</a>
                         </Link>
                       </li>
                       <li>
                         <Link href="/#">
-                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">
-                            ReactJS
-                          </a>
+                          <a className="bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2">ReactJS</a>
                         </Link>
                       </li>
                     </ul>
