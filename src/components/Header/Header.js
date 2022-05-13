@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Container, Dropdown } from "react-bootstrap";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import Link from "next/link";
-
+import ConnectButton from "../WalletConnect/ConnectButton";
+import Web3Context from "../WalletConnect/Web3Context";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import GlobalContext from "../../context/GlobalContext";
 import Offcanvas from "../Offcanvas";
@@ -11,6 +12,7 @@ import NestedMenu from "../NestedMenu";
 import { device } from "../../utils";
 import Logo from "../Logo";
 import { menuItems } from "./menuItems";
+import { MoralisProvider } from "react-moralis";
 
 import imgP from "../../assets/image/header-profile.png";
 
@@ -317,7 +319,7 @@ const Header = () => {
             {gContext.header.button === "account" && (
               <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
                 <a
-                  className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+                  className="btn btn-transparent  mt-5 text-uppercase font-size-3 heading-default-color focus-reset"
                   href="/#"
                   onClick={(e) => {
                     e.preventDefault();
@@ -326,7 +328,7 @@ const Header = () => {
                 >
                   Log In
                 </a>
-                <a
+                {/* <a
                   className={`btn btn-${gContext.header.variant} text-uppercase font-size-3`}
                   href="/#"
                   onClick={(e) => {
@@ -335,7 +337,13 @@ const Header = () => {
                   }}
                 >
                   Sign Up
-                </a>
+                </a> */}
+                <MoralisProvider 
+    serverUrl={'https://r0us9wvsjpcz.usemoralis.com:2053/server'} 
+    appId={'3JsMeS2qY0F2rFmhlby9OMMAuO6RHrlImWd0rK2R'}
+  > 
+                <ConnectButton> </ConnectButton>
+                </MoralisProvider>
               </div>
             )}
 
