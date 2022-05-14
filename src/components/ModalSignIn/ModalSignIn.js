@@ -2,6 +2,9 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Modal } from "react-bootstrap";
 import GlobalContext from "../../context/GlobalContext";
+import {Icon} from 'web3uikit'
+import { useMoralis } from 'react-moralis';
+import { useRouter } from 'next/router';
 
 const ModalStyled = styled(Modal)`
   /* &.modal {
@@ -12,6 +15,9 @@ const ModalStyled = styled(Modal)`
 const ModalSignIn = (props) => {
   const [showPass, setShowPass] = useState(true);
   const gContext = useContext(GlobalContext);
+  const router = useRouter();
+  const {signup, isAuthenticated, user, authenticate, setUserData, userError, isUserUpdating} = useMoralis()
+
 
   const handleClose = () => {
     gContext.toggleSignInModal();
@@ -20,6 +26,23 @@ const ModalSignIn = (props) => {
   const togglePassword = () => {
     setShowPass(!showPass);
   };
+
+  const logInWithWallet = async () => {
+    if (!isAuthenticated) {
+        
+      await authenticate({signingMessage:  "Log into Lancet @ " + Date.now() })
+        .then(function (user) {
+          console.log("logged in user:", user);
+          console.log(user?.get("ethAddress"));
+          gContext.toggleSignInModal();
+          router.push('/dashboard-main')
+          
+        })
+        .catch(function (error) {
+          console.log(error)
+        });
+    }
+  }
 
   return (
     <ModalStyled
@@ -94,13 +117,20 @@ const ModalSignIn = (props) => {
                   </div>
                   <div className="col-4 col-xs-12">
                     <a
-                      href="/#"
-                      className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                      onClick={(e) => {e.preventDefault(); logInWithWallet()}}
+                      className="font-size-4 font-weight-semibold position-relative text-white bg-success h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                     >
-                      <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                      <span className="d-none d-xs-block">
-                        Log in with Facebook
+                      <Icon
+                        
+                        fill="#000000"
+                        size={24}
+                        svg="metamask"
+                        className={'pos-xs-abs-cl ml-4'}
+                      />
+                        <span className="d-none d-xs-block">
+                      Log in with Wallet
                       </span>
+                      
                     </a>
                   </div>
                 </div>

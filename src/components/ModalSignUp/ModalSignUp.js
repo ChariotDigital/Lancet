@@ -2,6 +2,10 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Modal } from "react-bootstrap";
 import GlobalContext from "../../context/GlobalContext";
+import { useMoralis } from 'react-moralis';
+import { useRouter } from 'next/router';
+import {Icon} from 'web3uikit'
+
 
 const ModalStyled = styled(Modal)`
   /* &.modal {
@@ -12,7 +16,15 @@ const ModalStyled = styled(Modal)`
 const ModalSignUp = (props) => {
   const [showPassFirst, setShowPassFirst] = useState(true);
   const [showPassSecond, setShowPassSecond] = useState(true);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [email, setEmail] = useState("");
+  const [isNewUser, setIsNewUser] = useState(false);
+  
+  const {signup, isAuthenticated, user, authenticate, setUserData, userError, isUserUpdating} = useMoralis()
 
+  const router = useRouter();
   const gContext = useContext(GlobalContext);
   const handleClose = () => {
     gContext.toggleSignUpModal();
@@ -26,6 +38,58 @@ const ModalSignUp = (props) => {
     setShowPassSecond(!showPassSecond);
   };
 
+  
+
+
+  const finishUserSignUp = async () => {
+    if(validSignUpData()) {
+      setUserData({
+        username: username,
+        email: email,
+        password: password,
+      }).then(function (user) {
+        console.log("logged in user:", user);
+        console.log(user?.get("ethAddress"));
+        gContext.toggleSignUpModal();
+        router.push('/dashboard-main')
+      })
+      .catch(function (error) {
+        handleMoralisError(error)
+      });
+    
+    }
+      
+
+    }
+  
+
+  const signUpWithWallet = async () => {
+    if (!isAuthenticated) {
+        
+      await authenticate({signingMessage: "Sign up to become a buyer on Lancet"  })
+        .then(function (user) {
+          console.log("logged in user:", user);
+          console.log(user?.get("email"));
+          if(user?.get("email") === undefined ) {
+            setIsNewUser(true)
+          } else {
+            gContext.toggleSignUpModal();
+            router.push('/dashboard-main')
+          }
+          
+        })
+        .catch(function (error) {
+          handleMoralisError(error)
+        });
+    }
+  }
+
+  const validSignUpData = () => {
+    const regexExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
+    return regexExp.test(email) && password === passwordConfirm
+  }
+
+
   return (
     <ModalStyled
       {...props}
@@ -35,7 +99,138 @@ const ModalSignUp = (props) => {
       onHide={gContext.toggleSignUpModal}
     >
       <Modal.Body className="p-0">
-        <button
+        {isNewUser ? <div>
+          <div className="d-felx flex-row ">
+             <h2 className="m-5"> Congratulations! You've signed up</h2>
+              <strong className="ml-5 mt-2"> Please complete the rest of you profile information below</strong>
+          </div>
+            
+            <form className="m-10">
+                    <div className="form-group">
+                        <label
+                        htmlFor="email2"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        >
+                        Name
+                        </label>
+                        <input
+                        type="text"
+                        className="form-control"
+                        placeholder="John Doe"
+                        id="full_name"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label
+                        htmlFor="email2"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        >
+                        E-mail
+                        </label>
+                        <input
+                        type="email"
+                        className="form-control"
+                        placeholder="example@gmail.com"
+                        id="email2"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label
+                        htmlFor="password"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        >
+                        Password
+                        </label>
+                        <div className="position-relative">
+                        <input
+                            type={showPassFirst ? "password" : "text"}
+                            className="form-control"
+                            id="password"
+                            placeholder="Enter password"
+                        />
+                        <a
+                            href="/#"
+                            className="show-password pos-abs-cr fas mr-6 text-black-2"
+                            onClick={(e) => {
+                            e.preventDefault();
+                            togglePasswordFirst();
+                            }}
+                        >
+                            <span className="d-none">none</span>
+                        </a>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label
+                        htmlFor="password2"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        value={passwordConfirm}
+                        onChange={(e) => setPasswordConfirm(e.target.value)}
+                        >
+                        Confirm Password
+                        </label>
+                        <div className="position-relative">
+                        <input
+                            type={showPassSecond ? "password" : "text"}
+                            className="form-control"
+                            id="password2"
+                            placeholder="Enter password"
+                        />
+                        <a
+                            href="/#"
+                            className="show-password pos-abs-cr fas mr-6 text-black-2"
+                            onClick={(e) => {
+                            e.preventDefault();
+                            togglePasswordSecond();
+                            }}
+                        >
+                            <span className="d-none">none</span>
+                        </a>
+                        </div>
+                    </div>
+                    <div className="form-group d-flex flex-wrap justify-content-between mb-1">
+                        <label
+                        htmlFor="terms-check2"
+                        className="gr-check-input d-flex  mr-3"
+                        >
+                        <input
+                            className="d-none"
+                            type="checkbox"
+                            id="terms-check2"
+                        />
+                        <span className="checkbox mr-5"></span>
+                        <span className="font-size-3 mb-0 line-height-reset d-block">
+                            Agree to the{" "}
+                            <a href="/#" className="text-primary">
+                            Terms &amp; Conditions
+                            </a>
+                        </span>
+                        </label>
+                        <a
+                        href="/#"
+                        className="font-size-3 text-dodger line-height-reset"
+                        >
+                        Forget Password
+                        </a>
+                    </div>
+                    <div className="form-group mb-8">
+                        <button onClick ={(e) => {e.preventDefault(); finishUserSignUp()}} className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                        Finish Sign Up{" "}
+                        </button>
+                    </div>
+                    
+                    </form>
+
+        </div> : 
+        
+        <>
+          <button
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-n6 mr-lg-n6 focus-reset shadow-10"
           onClick={handleClose}
@@ -77,42 +272,65 @@ const ModalSignUp = (props) => {
                 <div className="row">
                   <div className="col-4 col-xs-12">
                     <a
-                      href="/#"
+                      
                       className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                     >
                       <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
                       <span className="d-none d-xs-block">
-                        Import from LinkedIn
+                        Sign up with LinkedIn
                       </span>
                     </a>
                   </div>
                   <div className="col-4 col-xs-12">
                     <a
-                      href="/#"
+                      
                       className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                     >
                       <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
                       <span className="d-none d-xs-block">
-                        Import from Google
+                      Sign up with Google
                       </span>
                     </a>
                   </div>
                   <div className="col-4 col-xs-12">
                     <a
-                      href="/#"
-                      className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                      onClick={(e) => {e.preventDefault(); signUpWithWallet()}}
+                      className="font-size-4 font-weight-semibold position-relative text-white bg-success h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                     >
-                      <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                      <span className="d-none d-xs-block">
-                        Import from Facebook
+                      <Icon
+                        
+                        fill="#000000"
+                        size={24}
+                        svg="metamask"
+                        className={'pos-xs-abs-cl ml-4'}
+                      />
+                        <span className="d-none d-xs-block">
+                      Sign up with Wallet
                       </span>
+                      
                     </a>
                   </div>
                 </div>
                 <div className="or-devider">
                   <span className="font-size-3 line-height-reset">Or</span>
                 </div>
-                <form action="/">
+                <form>
+                  <div className="form-group">
+                    <label
+                      htmlFor="email2"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="John Doe"
+                      id="full_name"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </div>
                   <div className="form-group">
                     <label
                       htmlFor="email2"
@@ -125,12 +343,16 @@ const ModalSignUp = (props) => {
                       className="form-control"
                       placeholder="example@gmail.com"
                       id="email2"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
                     <label
                       htmlFor="password"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     >
                       Password
                     </label>
@@ -157,6 +379,8 @@ const ModalSignUp = (props) => {
                     <label
                       htmlFor="password2"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      value={passwordConfirm}
+                      onChange={(e) => setPasswordConfirm(e.target.value)}
                     >
                       Confirm Password
                     </label>
@@ -205,24 +429,24 @@ const ModalSignUp = (props) => {
                     </a>
                   </div>
                   <div className="form-group mb-8">
-                    <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                    <button onClick ={(e) => {e.preventDefault(); signUpNewUser()}} className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
                       Sign Up{" "}
                     </button>
                   </div>
-                  <p className="font-size-4 text-center heading-default-color">
-                    Don’t have an account?{" "}
-                    <a href="/#" className="text-primary">
-                      Create a free account
-                    </a>
-                  </p>
+                  
                 </form>
               </div>
             </div>
           </div>
         </div>
+        </>
+        
+        }
+        
       </Modal.Body>
     </ModalStyled>
   );
-};
+}
 
 export default ModalSignUp;
+
