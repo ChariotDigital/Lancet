@@ -20,6 +20,7 @@ const ModalSignUp = (props) => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [email, setEmail] = useState("");
+  const [isNewUser, setIsNewUser] = useState(false);
   
   const {signup, isAuthenticated, user, authenticate, setUserData, userError, isUserUpdating} = useMoralis()
 
@@ -65,11 +66,16 @@ const ModalSignUp = (props) => {
   const signUpWithWallet = async () => {
     if (!isAuthenticated) {
         
-      await authenticate({signingMessage: "Sign up to become a buyer on Lancet" })
+      await authenticate({signingMessage: "Sign up to become a buyer on Lancet"  })
         .then(function (user) {
           console.log("logged in user:", user);
-          console.log(user?.get("ethAddress"));
-          
+          console.log(user?.get("email"));
+          if(user?.get("email") === undefined ) {
+            setIsNewUser(true)
+          } else {
+            gContext.toggleSignUpModal();
+            router.push('/dashboard-main')
+          }
           
         })
         .catch(function (error) {
@@ -93,7 +99,7 @@ const ModalSignUp = (props) => {
       onHide={gContext.toggleSignUpModal}
     >
       <Modal.Body className="p-0">
-        {isAuthenticated ? <div>
+        {isNewUser ? <div>
           <div className="d-felx flex-row ">
              <h2 className="m-5"> Congratulations! You've signed up</h2>
               <strong className="ml-5 mt-2"> Please complete the rest of you profile information below</strong>
