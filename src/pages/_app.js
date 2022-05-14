@@ -22,9 +22,14 @@ const MyApp = ({ Component, pageProps, router }) => {
   if (router.pathname.match(/404/)) {
     return (
       <GlobalProvider>
+        <MoralisProvider 
+                serverUrl={'https://r0us9wvsjpcz.usemoralis.com:2053/server'} 
+                appId={'3JsMeS2qY0F2rFmhlby9OMMAuO6RHrlImWd0rK2R'}
+            > 
         <Layout pageContext={{ layout: "bare" }}>
           <Component {...pageProps} />
         </Layout>
+        </MoralisProvider>
       </GlobalProvider>
     );
   }

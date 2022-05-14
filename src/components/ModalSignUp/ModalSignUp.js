@@ -2,6 +2,11 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Modal } from "react-bootstrap";
 import GlobalContext from "../../context/GlobalContext";
+import { useMoralis } from 'react-moralis';
+import {Redirect} from 'react-router-dom';
+import ConnectButton from "../WalletConnect/ConnectButton";
+import {Icon} from 'web3uikit'
+
 
 const ModalStyled = styled(Modal)`
   /* &.modal {
@@ -12,6 +17,11 @@ const ModalStyled = styled(Modal)`
 const ModalSignUp = (props) => {
   const [showPassFirst, setShowPassFirst] = useState(true);
   const [showPassSecond, setShowPassSecond] = useState(true);
+  const {signup, isAuthenticated, user, authenticate} = useMoralis()
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [email, setEmail] = useState("");
 
   const gContext = useContext(GlobalContext);
   const handleClose = () => {
@@ -25,6 +35,42 @@ const ModalSignUp = (props) => {
   const togglePasswordSecond = () => {
     setShowPassSecond(!showPassSecond);
   };
+
+  
+
+
+  const signUpNewUser = async () => {
+    if(validSignUpData()) {
+    //  await signup(username, password, email)
+    //     .then(function (user) {console.log(user)})
+    //     .catch(function (error) {
+    //       handleMoralisError(error)
+    //     });
+      
+
+    }
+  }
+
+  const signUpWithWallet = async () => {
+    if (!isAuthenticated) {
+        
+      await authenticate({signingMessage: "Sign up to become a buyer on Lancet" })
+        .then(function (user) {
+          console.log("logged in user:", user);
+          console.log(user?.get("ethAddress"));
+          gContext.toggleSignUpModal();
+        })
+        .catch(function (error) {
+          handleMoralisError(error)
+        });
+    }
+  }
+
+  const validSignUpData = () => {
+    const regexExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
+    return regexExp.test(email) && password === passwordConfirm
+  }
+
 
   return (
     <ModalStyled
@@ -77,42 +123,65 @@ const ModalSignUp = (props) => {
                 <div className="row">
                   <div className="col-4 col-xs-12">
                     <a
-                      href="/#"
+                      
                       className="font-size-4 font-weight-semibold position-relative text-white bg-allports h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                     >
                       <i className="fab fa-linkedin pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
                       <span className="d-none d-xs-block">
-                        Import from LinkedIn
+                        Sign up with LinkedIn
                       </span>
                     </a>
                   </div>
                   <div className="col-4 col-xs-12">
                     <a
-                      href="/#"
+                      
                       className="font-size-4 font-weight-semibold position-relative text-white bg-poppy h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                     >
                       <i className="fab fa-google pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
                       <span className="d-none d-xs-block">
-                        Import from Google
+                      Sign up with Google
                       </span>
                     </a>
                   </div>
                   <div className="col-4 col-xs-12">
                     <a
-                      href="/#"
-                      className="font-size-4 font-weight-semibold position-relative text-white bg-marino h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
+                      onClick={(e) => {e.preventDefault(); signUpWithWallet()}}
+                      className="font-size-4 font-weight-semibold position-relative text-white bg-success h-px-48 flex-all-center w-100 px-6 rounded-5 mb-4"
                     >
-                      <i className="fab fa-facebook-square pos-xs-abs-cl font-size-7 ml-xs-4"></i>{" "}
-                      <span className="d-none d-xs-block">
-                        Import from Facebook
+                      <Icon
+                        
+                        fill="#000000"
+                        size={24}
+                        svg="metamask"
+                        className={'pos-xs-abs-cl ml-4'}
+                      />
+                        <span className="d-none d-xs-block">
+                      Sign up with Wallet
                       </span>
+                      
                     </a>
                   </div>
                 </div>
                 <div className="or-devider">
                   <span className="font-size-3 line-height-reset">Or</span>
                 </div>
-                <form action="/">
+                <form>
+                  <div className="form-group">
+                    <label
+                      htmlFor="email2"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="John Doe"
+                      id="full_name"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </div>
                   <div className="form-group">
                     <label
                       htmlFor="email2"
@@ -125,12 +194,16 @@ const ModalSignUp = (props) => {
                       className="form-control"
                       placeholder="example@gmail.com"
                       id="email2"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div className="form-group">
                     <label
                       htmlFor="password"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     >
                       Password
                     </label>
@@ -157,6 +230,8 @@ const ModalSignUp = (props) => {
                     <label
                       htmlFor="password2"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      value={passwordConfirm}
+                      onChange={(e) => setPasswordConfirm(e.target.value)}
                     >
                       Confirm Password
                     </label>
@@ -205,16 +280,11 @@ const ModalSignUp = (props) => {
                     </a>
                   </div>
                   <div className="form-group mb-8">
-                    <button className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                    <button onClick ={(e) => {e.preventDefault(); signUpNewUser()}} className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
                       Sign Up{" "}
                     </button>
                   </div>
-                  <p className="font-size-4 text-center heading-default-color">
-                    Don’t have an account?{" "}
-                    <a href="/#" className="text-primary">
-                      Create a free account
-                    </a>
-                  </p>
+                  
                 </form>
               </div>
             </div>
@@ -226,3 +296,4 @@ const ModalSignUp = (props) => {
 };
 
 export default ModalSignUp;
+

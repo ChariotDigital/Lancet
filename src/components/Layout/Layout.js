@@ -93,7 +93,7 @@ const Layout = ({ children, pageContext }) => {
         <div data-theme-mode-panel-active data-theme="light">
           <GlobalStyle />
           <Head>
-            <title>JustCamp</title>
+            <title>Lancet</title>
             {/* <link rel="icon" type="image/png" href={imgFavicon} /> */}
           </Head>
           <Loader id="loading" className={visibleLoader ? "" : "inActive"}>
@@ -124,7 +124,7 @@ const Layout = ({ children, pageContext }) => {
         <div data-theme-mode-panel-active data-theme="light">
           <GlobalStyle />
           <Head>
-            <title>JustCamp</title>
+            <title>Lancet</title>
             {/* <link rel="icon" type="image/png" href={imgFavicon} /> */}
           </Head>
           <Loader id="loading" className={visibleLoader ? "" : "inActive"}>
@@ -160,7 +160,7 @@ const Layout = ({ children, pageContext }) => {
         <div data-theme-mode-panel-active data-theme="light">
           <GlobalStyle />
           <Head>
-            <title>JustCamp</title>
+            <title>Lancet</title>
             {/* <link rel="icon" type="image/png" href={imgFavicon} /> */}
           </Head>
           <Loader id="loading" className={visibleLoader ? "" : "inActive"} />
