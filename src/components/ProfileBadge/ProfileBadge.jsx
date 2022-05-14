@@ -2,7 +2,7 @@ import { Container, Dropdown } from "react-bootstrap";
 import Link from "next/link";
 import { useMoralis } from "react-moralis";
 import {Blockie} from 'web3uikit'
-import { useWindowSize } from "../hooks/useWindowSize";
+import { useWindowSize } from "../../hooks/useWindowSize";
 
 
 const ProfileBadge = (props) => {

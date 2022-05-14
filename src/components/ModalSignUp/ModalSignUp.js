@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { Modal } from "react-bootstrap";
 import GlobalContext from "../../context/GlobalContext";
 import { useMoralis } from 'react-moralis';
-import {Redirect} from 'react-router-dom';
-import ConnectButton from "../WalletConnect/ConnectButton";
+import { useRouter } from 'next/router';
 import {Icon} from 'web3uikit'
 
 
@@ -17,12 +16,14 @@ const ModalStyled = styled(Modal)`
 const ModalSignUp = (props) => {
   const [showPassFirst, setShowPassFirst] = useState(true);
   const [showPassSecond, setShowPassSecond] = useState(true);
-  const {signup, isAuthenticated, user, authenticate} = useMoralis()
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [email, setEmail] = useState("");
+  
+  const {signup, isAuthenticated, user, authenticate, setUserData, userError, isUserUpdating} = useMoralis()
 
+  const router = useRouter();
   const gContext = useContext(GlobalContext);
   const handleClose = () => {
     gContext.toggleSignUpModal();
@@ -39,17 +40,27 @@ const ModalSignUp = (props) => {
   
 
 
-  const signUpNewUser = async () => {
+  const finishUserSignUp = async () => {
     if(validSignUpData()) {
-    //  await signup(username, password, email)
-    //     .then(function (user) {console.log(user)})
-    //     .catch(function (error) {
-    //       handleMoralisError(error)
-    //     });
+      setUserData({
+        username: username,
+        email: email,
+        password: password,
+      }).then(function (user) {
+        console.log("logged in user:", user);
+        console.log(user?.get("ethAddress"));
+        gContext.toggleSignUpModal();
+        router.push('/dashboard-main')
+      })
+      .catch(function (error) {
+        handleMoralisError(error)
+      });
+    
+    }
       
 
     }
-  }
+  
 
   const signUpWithWallet = async () => {
     if (!isAuthenticated) {
@@ -58,7 +69,8 @@ const ModalSignUp = (props) => {
         .then(function (user) {
           console.log("logged in user:", user);
           console.log(user?.get("ethAddress"));
-          gContext.toggleSignUpModal();
+          
+          
         })
         .catch(function (error) {
           handleMoralisError(error)
@@ -81,7 +93,138 @@ const ModalSignUp = (props) => {
       onHide={gContext.toggleSignUpModal}
     >
       <Modal.Body className="p-0">
-        <button
+        {isAuthenticated ? <div>
+          <div className="d-felx flex-row ">
+             <h2 className="m-5"> Congratulations! You've signed up</h2>
+              <strong className="ml-5 mt-2"> Please complete the rest of you profile information below</strong>
+          </div>
+            
+            <form className="m-10">
+                    <div className="form-group">
+                        <label
+                        htmlFor="email2"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        >
+                        Name
+                        </label>
+                        <input
+                        type="text"
+                        className="form-control"
+                        placeholder="John Doe"
+                        id="full_name"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label
+                        htmlFor="email2"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        >
+                        E-mail
+                        </label>
+                        <input
+                        type="email"
+                        className="form-control"
+                        placeholder="example@gmail.com"
+                        id="email2"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label
+                        htmlFor="password"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        >
+                        Password
+                        </label>
+                        <div className="position-relative">
+                        <input
+                            type={showPassFirst ? "password" : "text"}
+                            className="form-control"
+                            id="password"
+                            placeholder="Enter password"
+                        />
+                        <a
+                            href="/#"
+                            className="show-password pos-abs-cr fas mr-6 text-black-2"
+                            onClick={(e) => {
+                            e.preventDefault();
+                            togglePasswordFirst();
+                            }}
+                        >
+                            <span className="d-none">none</span>
+                        </a>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <label
+                        htmlFor="password2"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                        value={passwordConfirm}
+                        onChange={(e) => setPasswordConfirm(e.target.value)}
+                        >
+                        Confirm Password
+                        </label>
+                        <div className="position-relative">
+                        <input
+                            type={showPassSecond ? "password" : "text"}
+                            className="form-control"
+                            id="password2"
+                            placeholder="Enter password"
+                        />
+                        <a
+                            href="/#"
+                            className="show-password pos-abs-cr fas mr-6 text-black-2"
+                            onClick={(e) => {
+                            e.preventDefault();
+                            togglePasswordSecond();
+                            }}
+                        >
+                            <span className="d-none">none</span>
+                        </a>
+                        </div>
+                    </div>
+                    <div className="form-group d-flex flex-wrap justify-content-between mb-1">
+                        <label
+                        htmlFor="terms-check2"
+                        className="gr-check-input d-flex  mr-3"
+                        >
+                        <input
+                            className="d-none"
+                            type="checkbox"
+                            id="terms-check2"
+                        />
+                        <span className="checkbox mr-5"></span>
+                        <span className="font-size-3 mb-0 line-height-reset d-block">
+                            Agree to the{" "}
+                            <a href="/#" className="text-primary">
+                            Terms &amp; Conditions
+                            </a>
+                        </span>
+                        </label>
+                        <a
+                        href="/#"
+                        className="font-size-3 text-dodger line-height-reset"
+                        >
+                        Forget Password
+                        </a>
+                    </div>
+                    <div className="form-group mb-8">
+                        <button onClick ={(e) => {e.preventDefault(); finishUserSignUp()}} className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                        Finish Sign Up{" "}
+                        </button>
+                    </div>
+                    
+                    </form>
+
+        </div> : 
+        
+        <>
+          <button
           type="button"
           className="circle-32 btn-reset bg-white pos-abs-tr mt-n6 mr-lg-n6 focus-reset shadow-10"
           onClick={handleClose}
@@ -290,10 +433,14 @@ const ModalSignUp = (props) => {
             </div>
           </div>
         </div>
+        </>
+        
+        }
+        
       </Modal.Body>
     </ModalStyled>
   );
-};
+}
 
 export default ModalSignUp;
 

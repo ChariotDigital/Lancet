@@ -15,7 +15,7 @@ import { menuItems } from "./menuItems";
 
 
 import imgP from "../../assets/image/header-profile.png";
-import ProfileBadge from "../ProfileBadge";
+import ProfileBadge from "../ProfileBadge/ProfileBadge";
 
 const SiteHeader = styled.header`
   .dropdown-toggle::after {

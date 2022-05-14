@@ -27,7 +27,7 @@ const Hero = () => {
               <div className="row">
                 <div className="col-xxl-8 col-xl-7 col-md-8 col-sm-10">
                   <div className="text-primary font-size-5 font-weight-semibold mb-7">4923 Service Providers are available right now...</div>
-                  <h1 className="font-size-11 mb-9 text-black-2">Find the right person for your needs and pay through Cryptocurrency.</h1>
+                  <h1 className="font-size-11 mb-9 text-black-2">Find top Web3 talent and pay with crypto</h1>
                   <p className="font-size-5">Filter using our search mechanism to find the right service provider for your Web3 Needs</p>
                 </div>
               </div>
