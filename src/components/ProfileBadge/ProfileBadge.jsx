@@ -3,7 +3,9 @@ import Link from "next/link";
 import { useMoralis } from "react-moralis";
 import {Blockie} from 'web3uikit'
 import { useWindowSize } from "../../hooks/useWindowSize";
+
 import { useRouter } from 'next/router';
+
 
 
 const ProfileBadge = (props) => {

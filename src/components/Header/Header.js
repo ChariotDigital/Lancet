@@ -12,9 +12,6 @@ import NestedMenu from "../NestedMenu";
 import { device } from "../../utils";
 import Logo from "../Logo";
 import { menuItems } from "./menuItems";
-
-
-import imgP from "../../assets/image/header-profile.png";
 import ProfileBadge from "../ProfileBadge/ProfileBadge";
 
 const SiteHeader = styled.header`
