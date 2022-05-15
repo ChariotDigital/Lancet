@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import PageWrapper from "../components/PageWrapper";
 import Sidebar from "../components/Sidebar";
 import { Select } from "../components/Core";
+import HireButton from "../components/hireButton";
+import GlobalContext from "../context/GlobalContext";
 
 import imgB1 from "../assets/image/l1/png/feature-brand-1.png";
 import imgB2 from "../assets/image/l1/png/feature-brand-2.png";
@@ -10,6 +12,7 @@ import imgB3 from "../assets/image/l1/png/feature-brand-3.png";
 import imgB4 from "../assets/image/l1/png/feature-brand-4.png";
 import imgB5 from "../assets/image/l1/png/feature-brand-5.png";
 import imgB6 from "../assets/image/l1/png/feature-brand-6.png";
+import { Button } from "react-bootstrap";
 
 const defaultCountries = [
   { value: "sp", label: "Singapore" },
@@ -19,7 +22,8 @@ const defaultCountries = [
   { value: "pk", label: "Pakistan" },
 ];
 
-export default function SearchGrid () {
+export default function SearchGrid() {
+  const gContext = useContext(GlobalContext);
   return (
     <>
       <PageWrapper>
@@ -31,30 +35,18 @@ export default function SearchGrid () {
               </div>
               <div className="col-12 col-md-8 col-xs-12 ">
                 {/* <!-- form --> */}
-                <form
-                  action="/"
-                  className="search-form search-2-adjustment ml-lg-0 ml-md-15"
-                >
+                <form action="/" className="search-form search-2-adjustment ml-lg-0 ml-md-15">
                   <div className="filter-search-form-2 bg-white rounded-sm shadow-7 pr-6 py-6 pl-6">
                     <div className="filter-inputs">
                       <div className="form-group position-relative w-lg-45 w-xl-40 w-xxl-45">
-                        <input
-                          className="form-control focus-reset pl-13"
-                          type="text"
-                          id="keyword"
-                          placeholder="UI Designer"
-                        />
+                        <input className="form-control focus-reset pl-13" type="text" id="keyword" placeholder="UI Designer" />
                         <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
                           <i className="icon icon-zoom-2 text-primary font-weight-bold"></i>
                         </span>
                       </div>
                       {/* <!-- .select-city starts --> */}
                       <div className="form-group position-relative w-lg-55 w-xl-60 w-xxl-55">
-                        <Select
-                          options={defaultCountries}
-                          className="pl-8 h-100 arrow-3 font-size-4 d-flex align-items-center w-100"
-                          border={false}
-                        />
+                        <Select options={defaultCountries} className="pl-8 h-100 arrow-3 font-size-4 d-flex align-items-center w-100" border={false} />
 
                         <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
                           <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
@@ -63,9 +55,7 @@ export default function SearchGrid () {
                       {/* <!-- ./select-city ends --> */}
                     </div>
                     <div className="button-block">
-                      <button className="btn btn-primary line-height-reset h-100 btn-submit w-100 text-uppercase">
-                        Search
-                      </button>
+                      <button className="btn btn-primary line-height-reset h-100 btn-submit w-100 text-uppercase">Search</button>
                     </div>
                   </div>
                 </form>
@@ -73,8 +63,7 @@ export default function SearchGrid () {
                   <div className="d-flex align-items-center justify-content-between">
                     <h5 className="font-size-4 font-weight-normal text-default-color">
                       <span className="heading-default-color">120</span>
-                      results for{" "}
-                      <span className="heading-default-color">UI Designer</span>
+                      results for <span className="heading-default-color">UI Designer</span>
                     </h5>
                     <div className="d-flex align-items-center result-view-type">
                       <Link href="/search-list">
@@ -102,58 +91,56 @@ export default function SearchGrid () {
                             </Link>
                           </div>
                           <Link href="/#">
-                            <a className="font-size-3 d-block mb-0 text-gray">
-                              Google INC
-                            </a>
+                            <a className="font-size-3 d-block mb-0 text-gray">Google INC</a>
                           </Link>
                           <h2 className="mt-n4">
                             <Link href="/#">
-                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">
-                                Product Designer
-                              </a>
+                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">Product Designer</a>
                             </Link>
                           </h2>
                           <ul className="list-unstyled mb-1 card-tag-list">
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-denim font-size-3 rounded-3">
-                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                  Berlyn
+                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i> Berlyn
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-orange font-size-3 rounded-3">
-                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                  Full-time
+                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i> Full-time
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-eastern font-size-3 rounded-3">
-                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i>{" "}
-                                  80K-90K
+                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i> 80K-90K
                                 </a>
                               </Link>
                             </li>
                           </ul>
                           <p className="mb-7 font-size-4 text-gray">
-                            We are looking for Enrollment Advisors who are
-                            looking to take 30-35 appointments per week. All
-                            leads are pre-scheduled.
+                            We are looking for Enrollment Advisors who are looking to take 30-35 appointments per week. All leads are pre-scheduled.
                           </p>
                           <div className="card-btn-group">
-                            <Link href="/#">
-                              <a className="btn btn-green text-uppercase btn-medium rounded-3">
-                                Apply Now
-                              </a>
-                            </Link>
+                            {/* <Link href="/#"> */}
+                            {/* <HireButton /> */}
+                            <Button
+                              className="btn btn-green text-uppercase btn-medium rounded-3"
+                              href="/#"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                gContext.toggleApplicationModal();
+                              }}
+                            >
+                              Hire
+                            </Button>
+                            {/* </Link> */}
                             <Link href="/#">
                               <a className="btn btn-outline-mercury text-black-2 text-uppercase btn-medium rounded-3">
-                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
-                                Save it
+                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i> Save it
                               </a>
                             </Link>
                           </div>
@@ -171,58 +158,46 @@ export default function SearchGrid () {
                             </Link>
                           </div>
                           <Link href="/#">
-                            <a className="font-size-3 d-block mb-0 text-gray">
-                              AirBnb
-                            </a>
+                            <a className="font-size-3 d-block mb-0 text-gray">AirBnb</a>
                           </Link>
                           <h2 className="mt-n4">
                             <Link href="/#">
-                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">
-                                UI/UX Designer
-                              </a>
+                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">UI/UX Designer</a>
                             </Link>
                           </h2>
                           <ul className="list-unstyled mb-1 card-tag-list">
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-denim font-size-3 rounded-3">
-                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                  Berlyn
+                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i> Berlyn
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-orange font-size-3 rounded-3">
-                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                  Full-time
+                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i> Full-time
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-eastern font-size-3 rounded-3">
-                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i>{" "}
-                                  80K-90K
+                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i> 80K-90K
                                 </a>
                               </Link>
                             </li>
                           </ul>
                           <p className="mb-7 font-size-4 text-gray">
-                            We are looking for Enrollment Advisors who are
-                            looking to take 30-35 appointments per week. All
-                            leads are pre-scheduled.
+                            We are looking for Enrollment Advisors who are looking to take 30-35 appointments per week. All leads are pre-scheduled.
                           </p>
                           <div className="card-btn-group">
                             <Link href="/#">
-                              <a className="btn btn-green text-uppercase btn-medium rounded-3">
-                                Apply Now
-                              </a>
+                              <a className="btn btn-green text-uppercase btn-medium rounded-3">Hire</a>
                             </Link>
                             <Link href="/#">
                               <a className="btn btn-outline-mercury text-black-2 text-uppercase btn-medium rounded-3">
-                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
-                                Save it
+                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i> Save it
                               </a>
                             </Link>
                           </div>
@@ -240,58 +215,46 @@ export default function SearchGrid () {
                             </Link>
                           </div>
                           <Link href="/#">
-                            <a className="font-size-3 d-block mb-0 text-gray">
-                              Shopify
-                            </a>
+                            <a className="font-size-3 d-block mb-0 text-gray">Shopify</a>
                           </Link>
                           <h2 className="mt-n4">
                             <Link href="/#">
-                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">
-                                iOS Developer
-                              </a>
+                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">iOS Developer</a>
                             </Link>
                           </h2>
                           <ul className="list-unstyled mb-1 card-tag-list">
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-denim font-size-3 rounded-3">
-                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                  Berlyn
+                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i> Berlyn
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-orange font-size-3 rounded-3">
-                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                  Full-time
+                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i> Full-time
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-eastern font-size-3 rounded-3">
-                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i>{" "}
-                                  80K-90K
+                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i> 80K-90K
                                 </a>
                               </Link>
                             </li>
                           </ul>
                           <p className="mb-7 font-size-4 text-gray">
-                            We are looking for Enrollment Advisors who are
-                            looking to take 30-35 appointments per week. All
-                            leads are pre-scheduled.
+                            We are looking for Enrollment Advisors who are looking to take 30-35 appointments per week. All leads are pre-scheduled.
                           </p>
                           <div className="card-btn-group">
                             <Link href="/#">
-                              <a className="btn btn-green text-uppercase btn-medium rounded-3">
-                                Apply Now
-                              </a>
+                              <a className="btn btn-green text-uppercase btn-medium rounded-3">Hire</a>
                             </Link>
                             <Link href="/#">
                               <a className="btn btn-outline-mercury text-black-2 text-uppercase btn-medium rounded-3">
-                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
-                                Save it
+                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i> Save it
                               </a>
                             </Link>
                           </div>
@@ -309,58 +272,46 @@ export default function SearchGrid () {
                             </Link>
                           </div>
                           <Link href="/#">
-                            <a className="font-size-3 d-block mb-0 text-gray">
-                              Uber
-                            </a>
+                            <a className="font-size-3 d-block mb-0 text-gray">Uber</a>
                           </Link>
                           <h2 className="mt-n4">
                             <Link href="/#">
-                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">
-                                Creative Director{" "}
-                              </a>
+                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">Creative Director </a>
                             </Link>
                           </h2>
                           <ul className="list-unstyled mb-1 card-tag-list">
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-denim font-size-3 rounded-3">
-                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                  Berlyn
+                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i> Berlyn
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-orange font-size-3 rounded-3">
-                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                  Full-time
+                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i> Full-time
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-eastern font-size-3 rounded-3">
-                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i>{" "}
-                                  80K-90K
+                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i> 80K-90K
                                 </a>
                               </Link>
                             </li>
                           </ul>
                           <p className="mb-7 font-size-4 text-gray">
-                            We are looking for Enrollment Advisors who are
-                            looking to take 30-35 appointments per week. All
-                            leads are pre-scheduled.
+                            We are looking for Enrollment Advisors who are looking to take 30-35 appointments per week. All leads are pre-scheduled.
                           </p>
                           <div className="card-btn-group">
                             <Link href="/#">
-                              <a className="btn btn-green text-uppercase btn-medium rounded-3">
-                                Apply Now
-                              </a>
+                              <a className="btn btn-green text-uppercase btn-medium rounded-3">Hire</a>
                             </Link>
                             <Link href="/#">
                               <a className="btn btn-outline-mercury text-black-2 text-uppercase btn-medium rounded-3">
-                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
-                                Save it
+                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i> Save it
                               </a>
                             </Link>
                           </div>
@@ -378,58 +329,46 @@ export default function SearchGrid () {
                             </Link>
                           </div>
                           <Link href="/#">
-                            <a className="font-size-3 d-block mb-0 text-gray">
-                              Facebook
-                            </a>
+                            <a className="font-size-3 d-block mb-0 text-gray">Facebook</a>
                           </Link>
                           <h2 className="mt-n4">
                             <Link href="/#">
-                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">
-                                Marketing Manager{" "}
-                              </a>
+                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">Marketing Manager </a>
                             </Link>
                           </h2>
                           <ul className="list-unstyled mb-1 card-tag-list">
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-denim font-size-3 rounded-3">
-                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                  Berlyn
+                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i> Berlyn
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-orange font-size-3 rounded-3">
-                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                  Full-time
+                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i> Full-time
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-eastern font-size-3 rounded-3">
-                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i>{" "}
-                                  80K-90K
+                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i> 80K-90K
                                 </a>
                               </Link>
                             </li>
                           </ul>
                           <p className="mb-7 font-size-4 text-gray">
-                            We are looking for Enrollment Advisors who are
-                            looking to take 30-35 appointments per week. All
-                            leads are pre-scheduled.
+                            We are looking for Enrollment Advisors who are looking to take 30-35 appointments per week. All leads are pre-scheduled.
                           </p>
                           <div className="card-btn-group">
                             <Link href="/#">
-                              <a className="btn btn-green text-uppercase btn-medium rounded-3">
-                                Apply Now
-                              </a>
+                              <a className="btn btn-green text-uppercase btn-medium rounded-3">Hire</a>
                             </Link>
                             <Link href="/#">
                               <a className="btn btn-outline-mercury text-black-2 text-uppercase btn-medium rounded-3">
-                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
-                                Save it
+                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i> Save it
                               </a>
                             </Link>
                           </div>
@@ -447,58 +386,46 @@ export default function SearchGrid () {
                             </Link>
                           </div>
                           <Link href="/#">
-                            <a className="font-size-3 d-block mb-0 text-gray">
-                              Oculus
-                            </a>
+                            <a className="font-size-3 d-block mb-0 text-gray">Oculus</a>
                           </Link>
                           <h2 className="mt-n4">
                             <Link href="/#">
-                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">
-                                Software Engineer
-                              </a>
+                              <a className="font-size-7 text-black-2 font-weight-bold mb-4">Software Engineer</a>
                             </Link>
                           </h2>
                           <ul className="list-unstyled mb-1 card-tag-list">
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-denim font-size-3 rounded-3">
-                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i>{" "}
-                                  Berlyn
+                                  <i className="icon icon-pin-3 mr-2 font-weight-bold"></i> Berlyn
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-orange font-size-3 rounded-3">
-                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i>{" "}
-                                  Full-time
+                                  <i className="fa fa-briefcase mr-2 font-weight-bold"></i> Full-time
                                 </a>
                               </Link>
                             </li>
                             <li>
                               <Link href="/#">
                                 <a className="bg-regent-opacity-15 text-eastern font-size-3 rounded-3">
-                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i>{" "}
-                                  80K-90K
+                                  <i className="fa fa-dollar-sign mr-2 font-weight-bold"></i> 80K-90K
                                 </a>
                               </Link>
                             </li>
                           </ul>
                           <p className="mb-7 font-size-4 text-gray">
-                            We are looking for Enrollment Advisors who are
-                            looking to take 30-35 appointments per week. All
-                            leads are pre-scheduled.
+                            We are looking for Enrollment Advisors who are looking to take 30-35 appointments per week. All leads are pre-scheduled.
                           </p>
                           <div className="card-btn-group">
                             <Link href="/#">
-                              <a className="btn btn-green text-uppercase btn-medium rounded-3">
-                                Apply Now
-                              </a>
+                              <a className="btn btn-green text-uppercase btn-medium rounded-3">Hire</a>
                             </Link>
                             <Link href="/#">
                               <a className="btn btn-outline-mercury text-black-2 text-uppercase btn-medium rounded-3">
-                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
-                                Save it
+                                <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i> Save it
                               </a>
                             </Link>
                           </div>
@@ -510,8 +437,7 @@ export default function SearchGrid () {
                   <div className="text-center pt-5 pt-lg-13">
                     <Link href="/#">
                       <a className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center">
-                        Load More{" "}
-                        <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+                        Load More <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
                       </a>
                     </Link>
                   </div>
@@ -524,4 +450,4 @@ export default function SearchGrid () {
       </PageWrapper>
     </>
   );
-};
+}

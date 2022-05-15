@@ -48,7 +48,6 @@ const GlobalProvider = ({ children }) => {
   const toggleSignUpModal = () => {
     setSignUpModalVisible(!signUpModalVisible);
   };
-
   const toggleOffCanvas = () => {
     setVisibleOffCanvas(!visibleOffCanvas);
   };
