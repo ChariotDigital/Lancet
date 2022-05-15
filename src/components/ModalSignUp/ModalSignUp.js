@@ -270,6 +270,10 @@ const ModalSignUp = (props) => {
             <div className="col-lg-7 col-md-6">
               <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
                 <div className="row">
+                  {/*
+                  
+                  TODO: GOOGLE AND LINKED IN SIGNUP
+                  
                   <div className="col-4 col-xs-12">
                     <a
                       
@@ -291,7 +295,7 @@ const ModalSignUp = (props) => {
                       Sign up with Google
                       </span>
                     </a>
-                  </div>
+                  </div> */}
                   <div className="col-4 col-xs-12">
                     <a
                       onClick={(e) => {e.preventDefault(); signUpWithWallet()}}
@@ -429,7 +433,7 @@ const ModalSignUp = (props) => {
                     </a>
                   </div>
                   <div className="form-group mb-8">
-                    <button onClick ={(e) => {e.preventDefault(); signUpNewUser()}} className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                    <button onClick ={(e) => {e.preventDefault()}} className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
                       Sign Up{" "}
                     </button>
                   </div>

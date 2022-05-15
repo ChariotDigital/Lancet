@@ -93,6 +93,10 @@ const ModalSignIn = (props) => {
             <div className="col-lg-7 col-md-6">
               <div className="bg-white-2 h-100 px-11 pt-11 pb-7">
                 <div className="row">
+                  {/* 
+                  
+                  TODO: GOOGLE AND LINKED IN LOGIN
+                  
                   <div className="col-4 col-xs-12">
                     <a
                       href="/#"
@@ -114,7 +118,7 @@ const ModalSignIn = (props) => {
                         Log in with Google
                       </span>
                     </a>
-                  </div>
+                  </div> */}
                   <div className="col-4 col-xs-12">
                     <a
                       onClick={(e) => {e.preventDefault(); logInWithWallet()}}
