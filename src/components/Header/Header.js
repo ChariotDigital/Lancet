@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { Container, Dropdown } from "react-bootstrap";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import Link from "next/link";
-import ConnectButton from "../WalletConnect/ConnectButton";
-import { useMoralis } from "react-moralis";
+
 import { useWindowSize } from "../../hooks/useWindowSize";
 import GlobalContext from "../../context/GlobalContext";
 import Offcanvas from "../Offcanvas";
@@ -13,9 +12,7 @@ import { device } from "../../utils";
 import Logo from "../Logo";
 import { menuItems } from "./menuItems";
 
-
 import imgP from "../../assets/image/header-profile.png";
-import ProfileBadge from "../ProfileBadge/ProfileBadge";
 
 const SiteHeader = styled.header`
   .dropdown-toggle::after {
@@ -53,10 +50,6 @@ const Header = () => {
   const gContext = useContext(GlobalContext);
   const [showScrolling, setShowScrolling] = useState(false);
   const [showReveal, setShowReveal] = useState(false);
-  const {isAuthenticated, user} = useMoralis();
-
-
-
 
   const size = useWindowSize();
 
@@ -72,8 +65,6 @@ const Header = () => {
       setShowReveal(false);
     }
   });
-
-
 
   return (
     <>
@@ -109,7 +100,95 @@ const Header = () => {
                       FAQ
                     </a>
                   </li>
-                  
+                  {/* {menuItems.map(({ label, isExternal = false, name, items, ...rest }, index) => {
+                    const hasSubItems = Array.isArray(items);
+                    return (
+                      <React.Fragment key={name + index}>
+                        {hasSubItems ? (
+                          <li className="nav-item dropdown">
+                            <a
+                              className="nav-link dropdown-toggle gr-toggle-arrow"
+                              role="button"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                              href="/"
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              {label}
+                              <i className="icon icon-small-down"></i>
+                            </a>
+                            <ul className="gr-menu-dropdown dropdown-menu ">
+                              {items.map((subItem, indexSub) => {
+                                const hasInnerSubItems = Array.isArray(subItem.items);
+                                return (
+                                  <React.Fragment key={subItem.name + indexSub}>
+                                    {hasInnerSubItems ? (
+                                      <li className="drop-menu-item dropdown">
+                                        <a
+                                          className="dropdown-toggle gr-toggle-arrow"
+                                          role="button"
+                                          data-toggle="dropdown"
+                                          aria-expanded="false"
+                                          aria-haspopup="true"
+                                          href="/#"
+                                          // onClick={(e) => e.preventDefault()}
+                                        >
+                                          {subItem.label}
+                                          <i className="icon icon-small-down"></i>
+                                        </a>
+                                        <ul className="gr-menu-dropdown dropdown-menu dropdown-left">
+                                          {subItem.items.map((itemInner, indexInnerMost) => (
+                                            <li className="drop-menu-item" key={itemInner.name + indexInnerMost}>
+                                              {itemInner.isExternal ? (
+                                                <a href={`${itemInner.name}`} target="_blank" rel="noopener noreferrer">
+                                                  {itemInner.label}
+                                                </a>
+                                              ) : (
+                                                <Link href={`/${itemInner.name}`}>
+                                                  <a>{itemInner.label}</a>
+                                                </Link>
+                                              )}
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </li>
+                                    ) : (
+                                      <li className="drop-menu-item">
+                                        {subItem.isExternal ? (
+                                          <a href={`${subItem.name}`} target="_blank" rel="noopener noreferrer">
+                                            {subItem.label}
+                                          </a>
+                                        ) : (
+                                          <Link href={`/${subItem.name}`}>
+                                            <a>{subItem.label}</a>
+                                          </Link>
+                                        )}
+                                      </li>
+                                    )}
+                                  </React.Fragment>
+                                );
+                              })}
+                            </ul>
+                          </li>
+                        ) : (
+                          <li className="nav-item" {...rest}>
+                            {isExternal ? (
+                              <a className="nav-link" href={`${name}`} target="_blank" rel="noopener noreferrer">
+                                {label}
+                              </a>
+                            ) : (
+                              <Link href={`/${name}`}>
+                                <a className="nav-link" role="button" aria-expanded="false">
+                                  {label}
+                                </a>
+                              </Link>
+                            )}
+                          </li>
+                        )}
+                      </React.Fragment>
+                    );
+                  })} */}
                 </ul>
               </div>
             </div>
@@ -121,46 +200,79 @@ const Header = () => {
                 </Link>
               </div>
             )}
-            <span>{isAuthenticated} </span>
-            {
-              isAuthenticated ? 
-                  (
-    
-                  <ProfileBadge/>
-                ) : 
 
-
-                gContext.header.button === "account" && (
-                  <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
-                    <a
-                      className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-                      href="/dashboard-main"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        gContext.toggleSignInModal();
-                      }}
-                    >
-                      Log In
+            {gContext.header.button === "profile" && (
+              <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-none d-xs-flex align-items-center">
+                <div>
+                  <Link href="/#">
+                    <a className="px-3 ml-7 font-size-7 notification-block flex-y-center position-relative">
+                      <i className="fas fa-bell heading-default-color"></i>
+                      <span className="font-size-3 count font-weight-semibold text-white bg-primary circle-24 border border-width-3 border border-white">3</span>
                     </a>
-                    <a
-                      className="btn btn-success text-uppercase font-size-3 heading-default-color focus-reset"
-                      href="/dashboard-main"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        gContext.toggleSignUpModal();
-                      }}
-                    >
-                      Sign Up
-                    </a>
-                   
-                    
-                    
-                  </div>
-                )
-                 
-          }
+                  </Link>
+                </div>
+                <div>
+                  <Dropdown className="show-gr-dropdown py-5">
+                    <Dropdown.Toggle as="a" className="proile media ml-7 flex-y-center">
+                      <div className="circle-40">
+                        <img src={imgP.src} alt="" />
+                      </div>
+                      <i className="fas fa-chevron-down heading-default-color ml-6"></i>
+                    </Dropdown.Toggle>
+                    {size.width <= 991 ? (
+                      <Dropdown.Menu className="gr-menu-dropdown border-0 border-width-2 py-2 w-auto bg-default" key="1">
+                        <Link href="/#">
+                          <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Settings</a>
+                        </Link>
+                        <Link href="/#">
+                          <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Edit Profile</a>
+                        </Link>
+                        <Link href="/#">
+                          <a className=" dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Log Out</a>
+                        </Link>
+                      </Dropdown.Menu>
+                    ) : (
+                      <div className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default" key="2">
+                        <Link href="/#">
+                          <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Settings</a>
+                        </Link>
+                        <Link href="/#">
+                          <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Edit Profile</a>
+                        </Link>
+                        <Link href="/#">
+                          <a className=" dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Log Out</a>
+                        </Link>
+                      </div>
+                    )}
+                  </Dropdown>
+                </div>
+              </div>
+            )}
 
-          
+            {gContext.header.button === "account" && (
+              <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
+                <a
+                  className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+                  href="/dashboard-main"
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   gContext.toggleSignInModal();
+                  // }}
+                >
+                  Dashboard
+                </a>
+                <a
+                  className={`btn btn-${gContext.header.variant} text-uppercase font-size-3`}
+                  href="/#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    gContext.toggleSignUpModal();
+                  }}
+                >
+                  Sign Up
+                </a>
+              </div>
+            )}
 
             <ToggleButton
               className={`navbar-toggler btn-close-off-canvas ml-3 ${gContext.visibleOffCanvas ? "collapsed" : ""}`}
