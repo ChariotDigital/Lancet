@@ -16,8 +16,11 @@ import imgT4 from "../assets/image/l3/png/team-member-4.png";
 import imgT5 from "../assets/image/l3/png/team-member-5.png";
 
 import imgL from "../assets/image/svg/icon-loaction-pin-black.svg";
+import { useMoralis } from 'react-moralis';
 
 export default function CandidateProfile () {
+  const {user} = useMoralis();
+
   return (
     <>
       <PageWrapper headerConfig={{ button: "profile" }}>
@@ -419,148 +422,7 @@ export default function CandidateProfile () {
               {/* <!-- Middle Content --> */}
               {/* <!-- Right Sidebar Start --> */}
               <div className="col-12 col-xxl-3 col-md-4 offset-xxl-0 offset-lg-4 offset-md-5 order-3 order-xl-2 mt-xxl-0 mt-md-12">
-                <div className="pl-lg-5">
-                  <h4 className="font-size-6 font-weight-semibold mb-0">
-                    Other experts
-                  </h4>
-                  <ul className="list-unstyled">
-                    {/* <!-- Single List --> */}
-                    <li className="border-bottom">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT1.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              David Herison
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              UX/UI Designer
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                    {/* <!-- Single List --> */}
-                    <li className="border-bottom">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT2.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              Mark Zanitos
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              Lead Product Designer
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                    {/* <!-- Single List --> */}
-                    <li className="border-bottom">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT3.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              Anna Frankin
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              Visual Designer
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                    {/* <!-- Single List --> */}
-                    <li className="border-bottom">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT4.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              Jhony Vino
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              Creative Director
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                    {/* <!-- Single List --> */}
-                    <li className="">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT5.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              Aniasta Hemberg
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              Creative Director
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                  </ul>
-                </div>
+               
               </div>
               {/* <!-- Right Sidebar End --> */}
             </div>

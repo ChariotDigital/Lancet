@@ -12,6 +12,7 @@ import ModalVideo from "../ModalVideo";
 import ModalApplication from "../ModalApplication";
 import ModalSignIn from "../ModalSignIn";
 import ModalSignUp from "../ModalSignUp";
+import NewServiceModal from '../ServiceModal/'
 
 import GlobalContext from "../../context/GlobalContext";
 
@@ -109,6 +110,7 @@ const Layout = ({ children, pageContext }) => {
           <ModalApplication />
           <ModalSignIn />
           <ModalSignUp />
+          <NewServiceModal/>
         </div>
       </ThemeProvider>
     );
@@ -145,6 +147,7 @@ const Layout = ({ children, pageContext }) => {
           <ModalApplication />
           <ModalSignIn />
           <ModalSignUp />
+          <NewServiceModal/>
         </div>
       </ThemeProvider>
     );
@@ -175,6 +178,7 @@ const Layout = ({ children, pageContext }) => {
           <ModalApplication />
           <ModalSignIn />
           <ModalSignUp />
+          <NewServiceModal/>
         </div>
       </ThemeProvider>
     </>

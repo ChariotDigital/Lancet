@@ -21,7 +21,7 @@ const Sidebar = (props) => {
               <h4 className="mb-0">
                 <Link href="/#">
                   <a className="text-black-2 font-size-6 font-weight-semibold">
-                    David Henricks
+                    {props.user?.get('username')}
                   </a>
                 </Link>
               </h4>
