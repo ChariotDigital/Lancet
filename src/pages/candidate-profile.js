@@ -1,23 +1,53 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Nav, Tab } from "react-bootstrap";
 import Link from "next/link";
 import PageWrapper from "../components/PageWrapper";
 import ProfileSidebar from "../components/ProfileSidebar";
+import ExperienceCard from "../components/ExperienceCard/ExperienceCard"
 
-import imgB1 from "../assets/image/l2/png/featured-job-logo-1.png";
-import imgB2 from "../assets/image/l1/png/feature-brand-1.png";
+
 import imgB3 from "../assets/image/svg/harvard.svg";
 import imgB4 from "../assets/image/svg/mit.svg";
-
-import imgT1 from "../assets/image/l3/png/team-member-1.png";
-import imgT2 from "../assets/image/l3/png/team-member-2.png";
-import imgT3 from "../assets/image/l3/png/team-member-3.png";
-import imgT4 from "../assets/image/l3/png/team-member-4.png";
-import imgT5 from "../assets/image/l3/png/team-member-5.png";
-
 import imgL from "../assets/image/svg/icon-loaction-pin-black.svg";
+import { useMoralis } from 'react-moralis';
+import { Moralis } from 'moralis';
+
 
 export default function CandidateProfile () {
+  const {user, isInitialized, isAuthenticated} = useMoralis();
+  const [services, setServices] = useState([])
+
+  const query = new Moralis.Query("Services")
+
+  useEffect( async () => {
+    if(user !== null) {
+
+      const subscription = await query.subscribe();
+      
+      query.equalTo("user_id", user.id)
+      const results = await query.find();
+  
+      await loadServices(results)
+
+      subscription.on('create', async (object) => {
+        const results = await query.find()
+        await loadServices(results)
+      });
+      
+    }
+    }
+  , [ isInitialized])
+
+  const loadServices = async (data) => {
+
+    const parsedServices = []
+    for(const service of data) {
+      parsedServices.push(service.attributes)
+    }
+    
+    setServices(parsedServices)
+  };
+
   return (
     <>
       <PageWrapper headerConfig={{ button: "profile" }}>
@@ -42,7 +72,7 @@ export default function CandidateProfile () {
             <div className="row">
               {/* <!-- Left Sidebar Start --> */}
               <div className="col-12 col-xxl-3 col-lg-4 col-md-5 mb-11 mb-lg-0">
-                <ProfileSidebar />
+                <ProfileSidebar user={user}/>
               </div>
               {/* <!-- Left Sidebar End --> */}
               {/* <!-- Middle Content --> */}
@@ -80,17 +110,7 @@ export default function CandidateProfile () {
                             About
                           </h4>
                           <p className="font-size-4 mb-8">
-                            A talented professional with an academic background
-                            in IT and proven commercial development experience
-                            as C++ developer since 1999. Has a sound knowledge
-                            of the software development life cycle. Was involved
-                            in more than 140 software development outsourcing
-                            projects.
-                          </p>
-                          <p className="font-size-4 mb-8">
-                            Programming Languages: C/C++, .NET C++, Python,
-                            Bash, Shell, PERL, Regular expressions, Python,
-                            Active-script.
+                            {isAuthenticated? user.get("bio") : "Loading..."}
                           </p>
                         </div>
                         {/* <!-- Excerpt End --> */}
@@ -100,55 +120,18 @@ export default function CandidateProfile () {
                             Skills
                           </h4>
                           <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Agile
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Wireframing
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Prototyping
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Information
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Waterfall Model
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  New Layout
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Browsing
-                                </a>
-                              </Link>
-                            </li>
+                              {user?.get("skills").map(skill => {
+                                  return (
+                                    <li>
+                                        <Link href="/#">
+                                            <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                            {skill}
+                                            </a>
+                                        </Link>
+                                    </li>
+                                  )
+                                })
+                              }
                           </ul>
                         </div>
                         {/* <!-- Skills End --> */}
@@ -157,187 +140,15 @@ export default function CandidateProfile () {
                           <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
                             Work Exprerience
                           </h4>
-                          {/* <!-- Single Card --> */}
-                          <div className="w-100">
-                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                              <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                                <img src={imgB1.src} alt="" />
-                              </div>
-                              <div className="w-100 mt-n2">
-                                <h3 className="mb-0">
-                                  <Link href="/#">
-                                    <a className="font-size-6 text-black-2 font-weight-semibold">
-                                      Lead Product Designer
-                                    </a>
-                                  </Link>
-                                </h3>
-                                <Link href="/#">
-                                  <a className="font-size-4 text-default-color line-height-2">
-                                    Airabnb
-                                  </a>
-                                </Link>
-                                <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                                  <Link href="/#">
-                                    <a className="font-size-4 text-gray mr-5">
-                                      Jun 2017 - April 2020- 3 years
-                                    </a>
-                                  </Link>
-                                  <Link href="/#">
-                                    <a className="font-size-3 text-gray">
-                                      <span
-                                        className="mr-4"
-                                        css={`
-                                          margin-top: -2px;
-                                        `}
-                                      >
-                                        <img src={imgL.src} alt="" />
-                                      </span>
-                                      New York, USA
-                                    </a>
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          {/* <!-- Single Card End --> */}
-                          {/* <!-- Single Card --> */}
-                          <div className="w-100">
-                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                              <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                                <img src={imgB2.src} alt="" />
-                              </div>
-                              <div className="w-100 mt-n2">
-                                <h3 className="mb-0">
-                                  <Link href="/#">
-                                    <a className="font-size-6 text-black-2 font-weight-semibold">
-                                      Senior UI/UX Designer
-                                    </a>
-                                  </Link>
-                                </h3>
-                                <Link href="/#">
-                                  <a className="font-size-4 text-default-color line-height-2">
-                                    Google Inc
-                                  </a>
-                                </Link>
-                                <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                                  <Link href="/#">
-                                    <a className="font-size-3 text-gray mr-5">
-                                      Jun 2017 - April 2020- 3 years
-                                    </a>
-                                  </Link>
-                                  <Link href="/#">
-                                    <a className="font-size-3 text-gray">
-                                      <span
-                                        className="mr-4"
-                                        css={`
-                                          margin-top: -2px;
-                                        `}
-                                      >
-                                        <img src={imgL.src} alt="" />
-                                      </span>
-                                      New York, USA
-                                    </a>
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          {/* <!-- Single Card End --> */}
+                          {services?.map( service => {
+                            return (
+
+                              <ExperienceCard service={service}/>
+                            )
+                            
+                          })}
                         </div>
-                        {/* <!-- Card Section End --> */}
-                        {/* <!-- Card Section Start --> */}
-                        <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
-                          <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
-                            Education
-                          </h4>
-                          {/* <!-- Single Card --> */}
-                          <div className="w-100">
-                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                              <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                                <img src={imgB3.src} alt="" />
-                              </div>
-                              <div className="w-100 mt-n2">
-                                <h3 className="mb-0">
-                                  <Link href="/#">
-                                    <a className="font-size-6 text-black-2">
-                                      Masters in Art Design
-                                    </a>
-                                  </Link>
-                                </h3>
-                                <Link href="/#">
-                                  <a className="font-size-4 text-default-color line-height-2">
-                                    Harvard University
-                                  </a>
-                                </Link>
-                                <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                                  <Link href="/#">
-                                    <a className="font-size-3 text-gray mr-5">
-                                      Jun 2017 - April 2020- 3 years
-                                    </a>
-                                  </Link>
-                                  <Link href="/#">
-                                    <a className="font-size-3 text-gray">
-                                      <span
-                                        className="mr-4"
-                                        css={`
-                                          margin-top: -2px;
-                                        `}
-                                      >
-                                        <img src={imgL.src} alt="" />
-                                      </span>
-                                      Brylin, USA
-                                    </a>
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          {/* <!-- Single Card End --> */}
-                          {/* <!-- Single Card --> */}
-                          <div className="w-100">
-                            <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                              <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                                <img src={imgB4.src} alt="" />
-                              </div>
-                              <div className="w-100 mt-n2">
-                                <h3 className="mb-0">
-                                  <Link href="/#">
-                                    <a className="font-size-6 text-black-2">
-                                      Bachelor in Software Engineering{" "}
-                                    </a>
-                                  </Link>
-                                </h3>
-                                <Link href="/#">
-                                  <a className="font-size-4 text-default-color line-height-2">
-                                    Manipal Institute of Technology
-                                  </a>
-                                </Link>
-                                <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                                  <Link href="/#">
-                                    <a className="font-size-3 text-gray mr-5">
-                                      Fed 2012 - April 2016 - 4 years
-                                    </a>
-                                  </Link>
-                                  <Link href="/#">
-                                    <a className="font-size-3 text-gray">
-                                      <span
-                                        className="mr-4"
-                                        css={`
-                                          margin-top: -2px;
-                                        `}
-                                      >
-                                        <img src={imgL.src} alt="" />
-                                      </span>
-                                      New York, USA
-                                    </a>
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          {/* <!-- Single Card End --> */}
-                        </div>
-                        {/* <!-- Card Section End --> */}
+                        
                       </Tab.Pane>
                       <Tab.Pane eventKey="two">
                         {/* <!-- Excerpt Start --> */}
@@ -419,148 +230,7 @@ export default function CandidateProfile () {
               {/* <!-- Middle Content --> */}
               {/* <!-- Right Sidebar Start --> */}
               <div className="col-12 col-xxl-3 col-md-4 offset-xxl-0 offset-lg-4 offset-md-5 order-3 order-xl-2 mt-xxl-0 mt-md-12">
-                <div className="pl-lg-5">
-                  <h4 className="font-size-6 font-weight-semibold mb-0">
-                    Other experts
-                  </h4>
-                  <ul className="list-unstyled">
-                    {/* <!-- Single List --> */}
-                    <li className="border-bottom">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT1.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              David Herison
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              UX/UI Designer
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                    {/* <!-- Single List --> */}
-                    <li className="border-bottom">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT2.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              Mark Zanitos
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              Lead Product Designer
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                    {/* <!-- Single List --> */}
-                    <li className="border-bottom">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT3.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              Anna Frankin
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              Visual Designer
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                    {/* <!-- Single List --> */}
-                    <li className="border-bottom">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT4.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              Jhony Vino
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              Creative Director
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                    {/* <!-- Single List --> */}
-                    <li className="">
-                      <Link href="/#">
-                        <a className="media align-items-center py-9 flex-wrap">
-                          <div className="mr-7">
-                            <img
-                              className="square-72 rounded-3"
-                              src={imgT5.src}
-                              alt=""
-                            />
-                          </div>
-                          <div className="">
-                            <h4 className="mb-0 font-size-5 font-weight-semibold">
-                              Aniasta Hemberg
-                            </h4>
-                            <p className="mb-0 font-size-3 heading-default-color">
-                              Creative Director
-                            </p>
-                            <span className="font-size-3 text-smoke">
-                              <img className="mr-2" src={imgL.src} alt="" />
-                              New York, USA
-                            </span>
-                          </div>
-                        </a>
-                      </Link>
-                    </li>
-                    {/* <!-- Single List End --> */}
-                  </ul>
-                </div>
+               
               </div>
               {/* <!-- Right Sidebar End --> */}
             </div>

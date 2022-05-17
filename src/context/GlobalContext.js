@@ -8,6 +8,7 @@ const GlobalProvider = ({ children }) => {
   const [applicationModalVisible, setApplicationModalVisible] = useState(false);
   const [signInModalVisible, setSignInModalVisible] = useState(false);
   const [signUpModalVisible, setSignUpModalVisible] = useState(false);
+  const [newServiceModalVisible , setNewServiceModalVisible] = useState(false);
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [visibleOffCanvas, setVisibleOffCanvas] = useState(false);
   const [header, setHeader] = useState({
@@ -44,6 +45,9 @@ const GlobalProvider = ({ children }) => {
   const toggleSignInModal = () => {
     setSignInModalVisible(!signInModalVisible);
   };
+  const toggleNewServiceModal = () => {
+    setNewServiceModalVisible(!newServiceModalVisible);
+  };
 
   const toggleSignUpModal = () => {
     setSignUpModalVisible(!signUpModalVisible);
@@ -69,6 +73,8 @@ const GlobalProvider = ({ children }) => {
         toggleApplicationModal,
         signInModalVisible,
         toggleSignInModal,
+        newServiceModalVisible,
+        toggleNewServiceModal,
         signUpModalVisible,
         toggleSignUpModal,
         visibleOffCanvas,
