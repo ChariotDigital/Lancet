@@ -6,11 +6,11 @@ import imgP from "../../assets/image/l3/png/pro-img.png";
 import { InputGroup } from "react-bootstrap";
 
 const Sidebar = (props) => {
-  const [professions, setProfessions] = useState([]);
+  const [professions, setProfessions] = useState(props.professions);
   const [socialLinks, setSocialLinks] = useState([]);
-  const [timeZone, setTimeZone] = useState('');
-  const [email, setEmail] = useState(props.user?.get('email'));
-  const [personalSite, setPersonalSite] = useState('');
+  const [timeZone, setTimeZone] = useState(props.timeZone);
+  const [email, setEmail] = useState(props.email);
+  const [personalSite, setPersonalSite] = useState(props.personalSite);
 
 
   const defaultProfessions = [
@@ -30,9 +30,9 @@ const Sidebar = (props) => {
   ];
 
   const addProfession = (newProf) => {
-    const updatedProfessions = [...professions]
+    const updatedProfessions = [...props.professions]
     updatedProfessions.push(newProf.value)
-    setProfessions(updatedProfessions)
+    props.setProfessions(updatedProfessions)
   }
 
 

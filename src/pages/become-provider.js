@@ -3,24 +3,14 @@ import GlobalContext from "../context/GlobalContext";
 import { Nav, Tab } from "react-bootstrap";
 import Link from "next/link";
 import PageWrapper from "../components/PageWrapper";
+import {Blockie} from 'web3uikit'
 import Creatable, { useCreatable } from 'react-select/creatable';
 import ProfileSidebar from "../components/ProfileSidebar";
 import ExperienceCard from "../components/ExperienceCard/ExperienceCard"
 import  Select  from "../components/Core/Select";
 
+import { useRouter } from 'next/router';
 
-
-import imgB2 from "../assets/image/l1/png/feature-brand-1.png";
-import imgB3 from "../assets/image/svg/harvard.svg";
-import imgB4 from "../assets/image/svg/mit.svg";
-
-import imgT1 from "../assets/image/l3/png/team-member-1.png";
-import imgT2 from "../assets/image/l3/png/team-member-2.png";
-import imgT3 from "../assets/image/l3/png/team-member-3.png";
-import imgT4 from "../assets/image/l3/png/team-member-4.png";
-import imgT5 from "../assets/image/l3/png/team-member-5.png";
-
-import imgL from "../assets/image/svg/icon-loaction-pin-black.svg";
 import { useMoralis, useMoralisQuery  } from 'react-moralis';
 import EditProfileSidebar from "../components/EditProfileSidebar";
 import { Moralis } from 'moralis';
@@ -30,44 +20,76 @@ export default function BecomeProvider ({}) {
 
   const gContext = useContext(GlobalContext);
 
-  const {user} = useMoralis();
+  const {user, isInitialized, setUserData, isAuthenticated} = useMoralis();
   const [bio, setBio] = useState('');
   const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState('')
   const [filteredSkills, setFilteredSkills] = useState(null)
   const [experience, setExperience] = useState([]);
-  const [services, setServices] = useState(null)
+  const [services, setServices] = useState([])
+  const [professions, setProfessions] = useState([]);
+  const [socialLinks, setSocialLinks] = useState([]);
+  const [timeZone, setTimeZone] = useState('');
+  const [email, setEmail] = useState(user?.get('email'));
+  const [personalSite, setPersonalSite] = useState('');
 
+  const router = useRouter();
 
-  const { fetch } = useMoralisQuery(
-    "Services",
-    (query) => query.equalTo("user_id", user?.id),
-    [],
-    { autoFetch: false }
-  );
+  const query = new Moralis.Query("Services")
+  
+  const defaultProfessions = [
+    { value: "Engineer", label: "Engineer" },
+    { value: "UI/UX Desginer", label: "UI/UX Desginer" },
+    { value: "Artist", label: "Artist" },
+    { value: "Writer", label: "Writer" },
+    { value: "Project Manager", label: "Project Manager" },
+    { value: "Marketer", label: "Marketer" },
+  ];
 
-  useEffect(() => {
-    if(user) {
+  useEffect( async () => {
+    if(user !== null) {
 
-      loadServices()
+      const subscription = await query.subscribe();
+      
+      query.equalTo("user_id", user.id)
+      const results = await query.find();
+  
+      await loadServices(results)
+
+      subscription.on('create', async (object) => {
+        const results = await query.find()
+        await loadServices(results)
+      });
+      
     }
-  }, [services, user])
+    }
+  , [ isInitialized])
 
-  const loadServices = async () => {
-    const results = await fetch();
-    // Do something with the returned Moralis.Object values
-    console.log(results)
-    setServices(results)
-    console.log("Services: ", services)
+  const loadServices = async (data) => {
+
+    const parsedServices = []
+    for(const service of data) {
+      parsedServices.push(service.attributes)
+    }
+    
+    setServices(parsedServices)
   };
 
-  const addSerivice  = (service) => {
-    newServices = [...services]
-    newServices.push(service)
-    setServices(newServices)
+  const saveUserData = async () => {
+    if(isAuthenticated) {
+      await setUserData({
+        email: email,
+        skills: skills,
+        timeZone:timeZone,
+        professions:professions,
+        personalSite: personalSite,
+        isProvider: true,
+        bio:bio
+      })
+      router.push('/candidate-profile')
+    }
+    
   }
-
-
 
 
   const defaultSkills = [
@@ -78,28 +100,16 @@ export default function BecomeProvider ({}) {
       {value: "Digital Marketing", label: "Digital Marketing"},
   ]
 
-  const searchSkills = (event) => {
-    console.log(event)
-    setTimeout(() => {
-        let _filteredSkills;
-        if (!event.query.trim().length) {
-            _filteredSkills = [...defaultSkills];
-        }
-        else {
-            _filteredSkills = defaultSkills.filter((skill) => {
-                return skill.toLowerCase().startsWith(event.query.toLowerCase());
-            });
-        }
-
-        setFilteredSkills(_filteredSkills);
-        console.log(filteredSkills);
-    }, 250);
-}
-
     const addSkill = (e) => {
         const updatedSkills = [...skills]
         updatedSkills.push(e.label)
         setSkills(updatedSkills)
+    }
+
+    const addProfession = (newProf) => {
+      const updatedProfessions = [...professions]
+      updatedProfessions.push(newProf.value)
+      setProfessions(updatedProfessions)
     }
 
   return (
@@ -119,10 +129,11 @@ export default function BecomeProvider ({}) {
                       </span>
                     </a>
                   </Link>
-                  <h3 className="text-success ml-25"> Please complete your talent profile </h3>
+                  <h3 className="text-gray ml-25"> Please complete your talent profile </h3>
                     {/* TODO: Completion score bar */}
                     <button 
                         className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 w-100 ml-14 mt-6"
+                        onClick={() => saveUserData()}
                     >
                       <i class="fa fa-check px-1" aria-hidden="true"></i>
                             Finish registration
@@ -134,7 +145,153 @@ export default function BecomeProvider ({}) {
             <div className="row">
               {/* <!-- Left Sidebar Start --> */}
               <div className="col-12 col-xxl-3 col-lg-4 col-md-5 mb-11 mb-lg-0">
-                <EditProfileSidebar user={user}/>
+                {isAuthenticated? 
+                  <>
+                  {/* <!-- Sidebar Start --> */}
+            
+                  
+                    <div className="pl-lg-5">
+                      {/* <!-- Top Start --> */}
+                      <div className="bg-white shadow-9 rounded-4">
+                        <div className="px-5 pt-11 pb-5 text-center border-bottom border-mercury">
+                          
+                            <a className="mb-4">
+                              <Blockie seed={user.get('ethAddress')} size={19}/>
+                            </a>
+                        
+                          <h4 className="mb-0">
+                            <Link href="/#">
+                              <a className="text-black-2 font-size-6 font-weight-semibold">
+                                {user?.get('username')}
+                              </a>
+                            </Link>
+                          </h4>
+                          <p className="mb-8">
+                          <Select 
+                            value={null}
+                            options={defaultProfessions} 
+                            defaultValue={null} 
+                            onChange={(e) => addProfession(e)} 
+                            placeholder="Add Profession" 
+                            className="mt-4  pl-1 h-100 arrow-3 font-size-4 d-flex align-items-center w-80" 
+                            
+                          />
+                          </p>
+                          <div className="icon-link d-flex flex-column align-items-center justify-content-center flex-wrap">
+                            
+                            {/* { socialLinks?.map(obj => {
+                              return (
+                            //     <Link href={obj.link}>
+                            //   <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                            //     <i className={"fab fa-" + obj.name}></i>
+                            //   </a>
+                            // </Link>
+                            
+                            <div id={obj.label} className="d-flex border border-4 ">
+                              <Select 
+                                options={defaultSocials}
+                                onChange={(e) => {obj.label = e.label}} 
+                                placeholder="eg. Twitter..." 
+                                className="pl-5 h-100 arrow-3 font-size-4 d-flex align-items-center w-100" 
+                                border={false} 
+                              />
+                              <input value={obj.value} onChange={(e) => console.log(e.target.value)} placeholder={'Link'} className='form-control' style={{width: '126px'}}></input>
+                            </div>
+                              )
+                            })}
+                            </div>
+                            <button 
+                            onClick={(e) => {addSocialLink(e)}} 
+                            placeholder="Add Social Links" 
+                            className="pl-5 h-50 btn-success mx-7 arrow-3 font-size-4 d-flex align-self-center w-60" 
+                            border={false} 
+                            >
+                              Add Social Link
+                            </button>
+                             */}
+                              
+                            
+                            {/* <Link href="/#">
+                              <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                                <i className="fab fa-facebook-f"></i>
+                              </a>
+                            </Link>
+                            <Link href="/#">
+                              <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                                <i className="fab fa-twitter"></i>
+                              </a>
+                            </Link>
+                            <Link href="/#">
+                              <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                                <i className="fab fa-dribbble"></i>
+                              </a>
+                            </Link>
+                            <Link href="/#">
+                              <a className="text-smoke circle-32 bg-concrete mr-5 hover-bg-green">
+                                <i className="fab fa-behance"></i>
+                              </a>
+                            </Link> */}
+                          </div>
+                          <ul className="list-unstyled d-flex align-items-center flex-wrap">
+                            {professions?.map(prof => {
+                                return (
+                                  <li>
+                                      <Link href="/#">
+                                          <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                          {prof}
+                                          </a>
+                                      </Link>
+                                  </li>
+                                )
+                              })
+                            }
+                          </ul>       
+                        </div>
+                        {/* <!-- Top End --> */}
+                        {/* <!-- Bottom Start --> */}
+                        <div className="px-9 pt-lg-5 pt-9 pt-xl-9 pb-5">
+                          <h5 className="text-black-2 mb-8 font-size-5">Contact Info</h5>
+                          {/* <!-- Single List --> */}
+                          <div className="mb-7">
+                            <p className="font-size-4 mb-0">Time Zone</p>
+                            <input value={timeZone} onChange={(e) => setTimeZone(e.target.value)} placeholder={'ex. EST, PST'} className='mt-4 form-control' style={{width: '200px'}}></input>
+                          </div>
+                          {/* <!-- Single List --> */}
+                          {/* <!-- Single List --> */}
+                          <div className="mb-7">
+                            <p className="font-size-4 mb-0">E-mail</p>
+                            <h5 className="font-size-4 font-weight-semibold mb-0">
+                            <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder={'example@email.com'} className='mt-4 form-control' style={{width: '200px'}}></input>
+                            </h5>
+                          </div>
+                          {/* <!-- Single List --> */}
+                          {/* <!-- Single List --> */}
+                          {/* <div className="mb-7">
+                            <p className="font-size-4 mb-0">Phone</p>
+                            <h5 className="font-size-4 font-weight-semibold mb-0">
+                              <a className="text-black-2 text-break" href="tel:+999565562">
+                                +999 565 562
+                              </a>
+                            </h5>
+                          </div> */}
+                          {/* <!-- Single List --> */}
+                          {/* <!-- Single List --> */}
+                          <div className="mb-7">
+                            <p className="font-size-4 mb-0">Personal Website</p>
+                            <input value={personalSite} onChange={(e) => setPersonalSite(e.target.value)} placeholder={'ex. richfreelancer.eth'} className='mt-4 form-control' style={{width: '200px'}}></input>
+                          </div>
+                          {/* <!-- Single List --> */}
+                        </div>
+                        {/* <!-- Bottom End --> */}
+                      </div>
+                    </div>
+                  
+            
+                  {/* <!-- Sidebar End --> */}
+                </>
+                    : null 
+                }
+                
               </div>
               {/* <!-- Left Sidebar End --> */}
               {/* <!-- Middle Content --> */}
@@ -154,14 +311,7 @@ export default function BecomeProvider ({}) {
                           Overview
                         </Nav.Link>
                       </li>
-                      <li className="tab-menu-items nav-item pr-12">
-                        <Nav.Link
-                          eventKey="two"
-                          className="text-uppercase font-size-3 font-weight-bold text-default-color py-3 px-0"
-                        >
-                          Contact
-                        </Nav.Link>
-                      </li>
+                    
                     </Nav>
                     {/* <!-- Tab Content --> */}
                     <Tab.Content>
@@ -190,6 +340,7 @@ export default function BecomeProvider ({}) {
                                     Skills
                                 </h4>
                                 <Select
+                                    value={null}
                                     className="mt-5 w-40"
                                     placeholder="Select Skills"
                                     options={defaultSkills}
@@ -210,49 +361,6 @@ export default function BecomeProvider ({}) {
                                   )
                                 })
                               }
-                            
-                            {/* <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Wireframing
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Prototyping
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Information
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Waterfall Model
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  New Layout
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Browsing
-                                </a>
-                              </Link>
-                            </li> */}
                           </ul>
                         </div>
                         {/* <!-- Skills End --> */}
@@ -292,7 +400,7 @@ export default function BecomeProvider ({}) {
                       </Tab.Pane>
                       <Tab.Pane eventKey="two">
                         {/* <!-- Excerpt Start --> */}
-                        <div className="pr-xl-11 p-5 pl-xs-12 pt-9 pb-11">
+                        {/* <div className="pr-xl-11 p-5 pl-xs-12 pt-9 pb-11">
                           <form action="/">
                             <div className="row">
                               <div className="col-12 mb-7">
@@ -358,7 +466,7 @@ export default function BecomeProvider ({}) {
                               </div>
                             </div>
                           </form>
-                        </div>
+                        </div> */}
                         {/* <!-- Excerpt End --> */}
                       </Tab.Pane>
                     </Tab.Content>
@@ -370,12 +478,14 @@ export default function BecomeProvider ({}) {
               {/* <!-- Middle Content --> */}
               {/* <!-- Right Sidebar Start --> */}
               <div className="col-12 col-xxl-3 col-md-4 offset-xxl-0 offset-lg-4 offset-md-5 order-3 order-xl-2 mt-xxl-0 mt-md-12">
-              <div className="pl-lg-5">
+              <div className="pl-lg-5 bg-light-gray">
                   <h4 className="font-size-6 font-weight-semibold mb-0">
                     Profile Completion
                   </h4>
-
-                  
+                  <div class="progress mt-5">
+                    <div class="progress-bar" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                  </div>
+                                    
                 </div>
               </div>
               {/* <!-- Right Sidebar End --> */}

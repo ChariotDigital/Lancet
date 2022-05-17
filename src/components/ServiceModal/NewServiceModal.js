@@ -30,15 +30,9 @@ const NewServiceModal = (props) => {
   const [skills, setSkills] = useState([]);
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
   
-  const [email, setEmail] = useState("");
-  const [isNewUser, setIsNewUser] = useState(false);
-  
-  const { isAuthenticated, user, setUserData, userError, isUserUpdating} = useMoralis();
+  const {user } = useMoralis();
   const { save } = useNewMoralisObject("Services");
-
-  const router = useRouter();
   const gContext = useContext(GlobalContext);
 
 
@@ -50,6 +44,14 @@ const NewServiceModal = (props) => {
     const updatedSkills = [...skills]
     updatedSkills.push(e.label)
     setSkills(updatedSkills)
+}
+
+const resetValues = () => {
+  setPrice('')
+  setTitle('')
+  setScope('')
+  setSkills([])
+  setDescription('')
 }
 
 const saveNewService = async (title, description, scope, skills, category, price) => {
@@ -75,6 +77,8 @@ const saveNewService = async (title, description, scope, skills, category, price
         alert("Failed to create new object, with error code: " + error.message);
       },
     });
+
+    resetValues()
 
 }
 
