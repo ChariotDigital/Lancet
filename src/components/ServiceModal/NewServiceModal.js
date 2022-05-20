@@ -29,14 +29,17 @@ const NewServiceModal = (props) => {
   const { save } = useNewMoralisObject("Services");
   const gContext = useContext(GlobalContext);
 
+  const serviceState = useMemo(() => {
+    return {title, description, scope, skills, category, price}
+  }, [title, description, scope, skills, category, price])
+
 
   const handleClose = () => {
     gContext.toggleNewServiceModal();
   };
 
   const addSkill = (e) => {
-    const updatedSkills = [...skills]
-    updatedSkills.push(e.label)
+    const updatedSkills = [...skills, e.label]
     setSkills(updatedSkills)
 }
 
@@ -48,19 +51,9 @@ const resetValues = () => {
   setDescription('')
 }
 
-const saveNewService = async (title, description, scope, skills, category, price) => {
-    
-  const data = {
-      user_id: user.id,
-      title: title,
-      scope: scope,
-      description: description,
-      price: price,
-      category: category,
-      skills: skills
-    };
+const saveNewService = async () => {
 
-    save(data, {
+    save(serviceState, {
       onSuccess: (service) => {
         // Execute any logic that should take place after the object is saved.
         alert("New service created with objectId: " + service.id);
@@ -72,7 +65,7 @@ const saveNewService = async (title, description, scope, skills, category, price
       },
     });
 
-    resetValues()
+    resetValues
 
 }
 
