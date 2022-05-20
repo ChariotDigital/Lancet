@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useMemo } from "react";
 import styled from "styled-components";
 import { Modal } from "react-bootstrap";
 import GlobalContext from "../../context/GlobalContext";
@@ -13,6 +13,8 @@ const ModalStyled = styled(Modal)`
   } */
 `;
 
+const IS_EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi
+
 const ModalSignUp = (props) => {
   const [showPassFirst, setShowPassFirst] = useState(true);
   const [showPassSecond, setShowPassSecond] = useState(true);
@@ -24,30 +26,30 @@ const ModalSignUp = (props) => {
   
   const {signup, isAuthenticated, user, authenticate, setUserData, userError, isUserUpdating} = useMoralis()
 
+  const userState = useMemo(() => {
+    return {username, password, email}
+  }, [username, password, email])
+
   const router = useRouter();
   const gContext = useContext(GlobalContext);
+
   const handleClose = () => {
     gContext.toggleSignUpModal();
   };
 
   const togglePasswordFirst = () => {
-    setShowPassFirst(!showPassFirst);
+    setShowPassFirst( currShowPassFirst => !currShowPassFirst);
   };
 
   const togglePasswordSecond = () => {
-    setShowPassSecond(!showPassSecond);
+    setShowPassSecond(currShowPassSecond => !currShowPassSecond);
   };
-
-  
-
 
   const finishUserSignUp = async () => {
     if(validSignUpData()) {
-      setUserData({
-        username: username,
-        email: email,
-        password: password,
-      }).then(function (user) {
+      setUserData(
+       userState,
+      ).then(function (user) {
         console.log("logged in user:", user);
         console.log(user?.get("ethAddress"));
         gContext.toggleSignUpModal();
@@ -60,7 +62,7 @@ const ModalSignUp = (props) => {
     }
       
 
-    }
+  }
   
 
   const signUpWithWallet = async () => {
@@ -85,8 +87,7 @@ const ModalSignUp = (props) => {
   }
 
   const validSignUpData = () => {
-    const regexExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
-    return regexExp.test(email) && password === passwordConfirm
+    return IS_EMAIL_REGEX.test(email) && password === passwordConfirm && username !== ''
   }
 
 

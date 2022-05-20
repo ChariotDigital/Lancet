@@ -5,10 +5,6 @@ import PageWrapper from "../components/PageWrapper";
 import ProfileSidebar from "../components/ProfileSidebar";
 import ExperienceCard from "../components/ExperienceCard/ExperienceCard"
 
-
-import imgB3 from "../assets/image/svg/harvard.svg";
-import imgB4 from "../assets/image/svg/mit.svg";
-import imgL from "../assets/image/svg/icon-loaction-pin-black.svg";
 import { useMoralis } from 'react-moralis';
 import { Moralis } from 'moralis';
 
@@ -138,7 +134,7 @@ export default function CandidateProfile () {
                         {/* <!-- Card Section Start --> */}
                         <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
                           <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
-                            Work Exprerience
+                            Services Provided
                           </h4>
                           {services?.map( service => {
                             return (

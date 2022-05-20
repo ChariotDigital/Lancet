@@ -39,13 +39,15 @@ const ProfileBadge = (props) => {
                             <Link href="/dashboard-main">
                               <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Dashboard</a>
                             </Link>
-                            <Link href="/become-provider">
-                              <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Become a Provider</a>
-                            </Link>
+                            {user.get('isProvider') === true ? null : 
+                              <Link href="/become-provider">
+                                <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Become a Provider</a>
+                              </Link>
+                            }
                             <Link href="/dashboard-settings">
                               <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Settings</a>
                             </Link>
-                            <Link href={user.get("isProvider") === true ? '/candidate-profile' : '/company-profile'}>
+                            <Link href={user.get("isProvider") === true ? '/edit-profile' : '/company-profile'}>
                               <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Edit Profile</a>
                             </Link>
                             <button onClick={() => logOutUser()} className=" dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Log Out</button>
@@ -55,13 +57,15 @@ const ProfileBadge = (props) => {
                             <Link href="/dashboard-main">
                               <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Dashboard</a>
                             </Link>
-                            <Link href="/become-provider">
-                              <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Become a Provider</a>
-                            </Link>
+                            {user.get('isProvider') === true ? null : 
+                              <Link href="/become-provider">
+                                <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Become a Provider</a>
+                              </Link>
+                            }
                             <Link href="/dashboard-settings">
                               <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Settings</a>
                             </Link>
-                            <Link href={user.get("isProvider") === true ? '/candidate-profile' : '/company-profile'}>
+                            <Link href={user.get("isProvider") === true ? '/edit-profile' : '/company-profile'}>
                               <a className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase">Edit Profile</a>
                             </Link>
                     

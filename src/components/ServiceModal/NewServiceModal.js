@@ -5,16 +5,10 @@ import { Modal } from "react-bootstrap";
 import GlobalContext from "../../context/GlobalContext";
 import {Blockie} from 'web3uikit'
 import { useMoralis } from 'react-moralis';
-import { useRouter } from 'next/router';
 import { useNewMoralisObject } from "react-moralis";
 import  Select  from "../Core/Select";
 
-import {Icon} from 'web3uikit'
-
-import imgF1 from "../../assets/image/l2/png/featured-job-logo-1.png";
-import iconD from "../../assets/image/svg/icon-dolor.svg";
-import iconB from "../../assets/image/svg/icon-briefcase.svg";
-import iconL from "../../assets/image/svg/icon-location.svg";
+import { defaultSkills, defaultScope, defaultCategories } from "../../api/sampleData";
 
 
 const ModalStyled = styled(Modal)`
@@ -82,35 +76,6 @@ const saveNewService = async (title, description, scope, skills, category, price
 
 }
 
-  const defaultCategories = [
-    { value: "Web Development", label: "Web Development" },
-    { value: "Web Design", label: "Web Design" },
-    { value: "Digital Art", label: "Digital Art" },
-    { value: "Social Media Marketing", label: "Social Media Marketing" },
-    { value: "Project Management" , label: "Project Management" },
-    { value: "Community Management", label: "Community Management" },
-  ];
-
-  const defaultSkills = [
-    {value: "react", label: "React"},
-    {value: "node.js", label: "Node.js"},
-    {value: "nft art", label: "NFT Art"},
-    {value: "Product Management", label: "Product Mangement"},
-    {value: "Digital Marketing", label: "Digital Marketing"},
-    ,
-]
-
-  const defaultScope = [
-    { value: "One-Time", label: "One-Time" },
-    { value: "Hourly", label: "Hourly" },
-    { value: "Fixed Time", label: "Fixed Time" }
-  ]
-
-  
-
-
-  // pt-28 pt-lg-27 pb-xl-25 pb-12
-  // col-xl-9 col-lg-11 
   
   return (
     <ModalStyled
@@ -151,8 +116,6 @@ const saveNewService = async (title, description, scope, skills, category, price
                               {/* TODO: Add image Uploader */}
                               <Blockie seed={user?.get('ethAddress')} size={20}/>
                           </div>
-                          {/* <!-- media logo end --> */}
-                          {/* <!-- media texts start --> */}
                           <div>
                           <input 
                             value={title} 
@@ -167,13 +130,6 @@ const saveNewService = async (title, description, scope, skills, category, price
                         {/* <!-- media end --> */}
                       </div>
                       <div className="col-md-6 text-right pt-7 pt-md-0 mt-md-n1">
-                        {/* <!-- media date start --> */}
-                        {/* <div className="media justify-content-md-end">
-                          <p className="font-size-4 text-gray mb-0">
-                            19 June 2020
-                          </p>
-                        </div> */}
-                        {/* <!-- media date end --> */}
                       </div>
                     </div>
                     <div className="row pt-4">
@@ -199,9 +155,9 @@ const saveNewService = async (title, description, scope, skills, category, price
                     <div className="row mb-7">
                       <div className="col-md-4 mb-md-0 mb-6">
                         <div className="media justify-content-md-start">
-                        <div class="input-group mb-3">
-                        <span class="input-group-text p-3 h-50">$</span>
-                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} class="form-control" placeholder="Price" aria-label="Amount"/>
+                        <div classname="input-group mb-3">
+                        <span className="input-group-text p-3 h-50">$</span>
+                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} className="form-control" placeholder="Price" aria-label="Amount"/>
                         </div>
 
                         </div>
@@ -224,76 +180,34 @@ const saveNewService = async (title, description, scope, skills, category, price
                     
                   </div>
                   <div className=" pr-xl-0 pr-xxl-14 p-5 pl-xs-12 pt-7 pb-5">
-                            <div className="d-flex justify-content-between">
-                                <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
-                                    Skills Used
-                                </h4>
-                                <Select
-                                    className="mt-5 w-40"
-                                    placeholder="Select Skills"
-                                    options={defaultSkills}
-                                    onChange={addSkill}
-                                    
-                                />
-                            </div>
-                          <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                              {skills?.map(skill => {
-                                  return (
-                                    <li>
-                                        <Link href="/#">
-                                            <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                            {skill}
-                                            </a>
-                                        </Link>
-                                    </li>
-                                  )
-                                })
-                              }
+                    <div className="d-flex justify-content-between">
+                        <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
+                            Skills Used
+                        </h4>
+                        <Select
+                            className="mt-5 w-40"
+                            placeholder="Select Skills"
+                            options={defaultSkills}
+                            onChange={addSkill}
                             
-                            {/* <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Wireframing
-                                </a>
-                              </Link>
-                            </li>
+                        />
+                    </div>
+                  <ul className="list-unstyled d-flex align-items-center flex-wrap">
+                      {skills?.map(skill => {
+                          return (
                             <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Prototyping
-                                </a>
-                              </Link>
+                                <Link href="/#">
+                                    <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                    {skill}
+                                    </a>
+                                </Link>
                             </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Information
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Waterfall Model
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  New Layout
-                                </a>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
-                                  Browsing
-                                </a>
-                              </Link>
-                            </li> */}
-                          </ul>
-                        </div>
+                          )
+                        })
+                      }
+                    
+                  </ul>
+                </div>
                   <div className="job-details-content border-top pt-8 pl-sm-9 pl-6 pr-sm-9 pr-6 pb-10 light-mode-texts">
                     <div className="row">
                       <div className="col-xl-11 col-md-12 pr-xxl-9 pr-xl-10 pr-lg-20">
@@ -326,10 +240,6 @@ const saveNewService = async (title, description, scope, skills, category, price
             </div>
           </div>
         </div>
-        
-
-        
-        
         
       </Modal.Body>
     </ModalStyled>
