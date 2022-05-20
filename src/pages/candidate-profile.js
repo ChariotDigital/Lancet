@@ -5,10 +5,6 @@ import PageWrapper from "../components/PageWrapper";
 import ProfileSidebar from "../components/ProfileSidebar";
 import ExperienceCard from "../components/ExperienceCard/ExperienceCard"
 
-
-import imgB3 from "../assets/image/svg/harvard.svg";
-import imgB4 from "../assets/image/svg/mit.svg";
-import imgL from "../assets/image/svg/icon-loaction-pin-black.svg";
 import { useMoralis } from 'react-moralis';
 import { Moralis } from 'moralis';
 

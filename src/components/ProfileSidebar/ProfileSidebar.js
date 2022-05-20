@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 
-import imgP from "../../assets/image/l3/png/pro-img.png";
 
 import {Blockie} from 'web3uikit'
 
@@ -26,12 +25,12 @@ const Sidebar = (props) => {
                 </Link>
               </h4>
               <p className="mb-3">
-              <ul className="list-unstyled d-flex align-items-center mb-0 flex-wrap">
+              <ul className="list-unstyled d-flex align-items-center justify-content-center  mb-0 flex-wrap">
                   {props.user?.get('professions')?.map(prof => {
                       return (
                         <li key={prof}>
                             <Link href="/#">
-                                <a className="bg-polar text-black-2  mr-2 px-1 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                <a className="bg-polar text-black-2  mr-2 px-3 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                                 {prof}
                                 </a>
                             </Link>

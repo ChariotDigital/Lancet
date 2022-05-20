@@ -4,18 +4,15 @@ import { Nav, Tab } from "react-bootstrap";
 import Link from "next/link";
 import PageWrapper from "../components/PageWrapper";
 import {Blockie} from 'web3uikit'
-import Creatable, { useCreatable } from 'react-select/creatable';
-import ProfileSidebar from "../components/ProfileSidebar";
 import ExperienceCard from "../components/ExperienceCard/ExperienceCard"
 import  Select  from "../components/Core/Select";
 
 import { useRouter } from 'next/router';
 
-import { useMoralis, useMoralisQuery  } from 'react-moralis';
-import EditProfileSidebar from "../components/EditProfileSidebar";
+import { useMoralis  } from 'react-moralis';
 import { Moralis } from 'moralis';
 
-import { defaultProfessions } from "../api/sampleData";
+import { defaultProfessions, defaultSkills } from "../api/sampleData";
 
 
 export default function BecomeProvider ({}) {
@@ -25,9 +22,6 @@ export default function BecomeProvider ({}) {
   const {user, isInitialized, setUserData, isAuthenticated} = useMoralis();
   const [bio, setBio] = useState('');
   const [skills, setSkills] = useState([]);
-  const [newSkill, setNewSkill] = useState('')
-  const [filteredSkills, setFilteredSkills] = useState(null)
-  const [experience, setExperience] = useState([]);
   const [services, setServices] = useState([])
   const [professions, setProfessions] = useState([]);
   const [socialLinks, setSocialLinks] = useState([]);
@@ -83,15 +77,6 @@ export default function BecomeProvider ({}) {
     }
     
   }
-
-
-  const defaultSkills = [
-      {value: "react", label: "React"},
-      {value: "node.js", label: "Node.js"},
-      {value: "nft art", label: "NFT Art"},
-      {value: "Product Management", label: "Product Mangement"},
-      {value: "Digital Marketing", label: "Digital Marketing"},
-  ]
 
     const addSkill = (e) => {
         const updatedSkills = [...skills]

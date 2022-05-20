@@ -4,7 +4,7 @@ import  Select  from "../Core/Select";
 
 import imgP from "../../assets/image/l3/png/pro-img.png";
 import { defaultProfessions } from "../../api/sampleData";
-import { InputGroup } from "react-bootstrap";
+
 
 const Sidebar = (props) => {
   const [professions, setProfessions] = useState(props.professions);
@@ -105,12 +105,12 @@ const Sidebar = (props) => {
                   </a>
                 </Link> */}
               </div>
-              <ul className="list-unstyled d-flex align-items-center flex-wrap">
+              <ul className="list-unstyled d-flex align-items-center justify-content-center flex-wrap">
                 {professions?.map(prof => {
                     return (
                       <li key={prof}>
                           <Link href="/#">
-                              <a className="bg-polar text-black-2  mr-6 px-3 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                              <a className="bg-polar text-black-2 mr-6 px-3 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                               {prof}
                               </a>
                           </Link>
