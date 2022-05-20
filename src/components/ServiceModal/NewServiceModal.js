@@ -9,6 +9,8 @@ import { useRouter } from 'next/router';
 import { useNewMoralisObject } from "react-moralis";
 import  Select  from "../Core/Select";
 
+import { defaultSkills, defaultScope, defaultCategories } from "../../api/sampleData";
+
 import {Icon} from 'web3uikit'
 
 import imgF1 from "../../assets/image/l2/png/featured-job-logo-1.png";
@@ -81,30 +83,6 @@ const saveNewService = async (title, description, scope, skills, category, price
     resetValues()
 
 }
-
-  const defaultCategories = [
-    { value: "Web Development", label: "Web Development" },
-    { value: "Web Design", label: "Web Design" },
-    { value: "Digital Art", label: "Digital Art" },
-    { value: "Social Media Marketing", label: "Social Media Marketing" },
-    { value: "Project Management" , label: "Project Management" },
-    { value: "Community Management", label: "Community Management" },
-  ];
-
-  const defaultSkills = [
-    {value: "react", label: "React"},
-    {value: "node.js", label: "Node.js"},
-    {value: "nft art", label: "NFT Art"},
-    {value: "Product Management", label: "Product Mangement"},
-    {value: "Digital Marketing", label: "Digital Marketing"},
-    ,
-]
-
-  const defaultScope = [
-    { value: "One-Time", label: "One-Time" },
-    { value: "Hourly", label: "Hourly" },
-    { value: "Fixed Time", label: "Fixed Time" }
-  ]
 
   
 
@@ -199,9 +177,9 @@ const saveNewService = async (title, description, scope, skills, category, price
                     <div className="row mb-7">
                       <div className="col-md-4 mb-md-0 mb-6">
                         <div className="media justify-content-md-start">
-                        <div class="input-group mb-3">
-                        <span class="input-group-text p-3 h-50">$</span>
-                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} class="form-control" placeholder="Price" aria-label="Amount"/>
+                        <div classname="input-group mb-3">
+                        <span className="input-group-text p-3 h-50">$</span>
+                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} className="form-control" placeholder="Price" aria-label="Amount"/>
                         </div>
 
                         </div>

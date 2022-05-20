@@ -138,7 +138,7 @@ export default function CandidateProfile () {
                         {/* <!-- Card Section Start --> */}
                         <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
                           <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
-                            Work Exprerience
+                            Services Provided
                           </h4>
                           {services?.map( service => {
                             return (

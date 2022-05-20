@@ -30,7 +30,7 @@ const ExpereinceCard = (props) => {
               <ul className="list-unstyled d-flex align-items-center flex-wrap">
                 {props.service.skills?.map(skill => {
                     return (
-                      <li>
+                      <li key={skill}>
                           <Link href="/#">
                               <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                               {skill}
@@ -46,7 +46,7 @@ const ExpereinceCard = (props) => {
           </div>
           <p>
           {props.service.description}
-            </p>
+          </p>
         </div>
     )
 }

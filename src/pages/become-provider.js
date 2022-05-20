@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useContext, useEffect, useMemo} from "react";
 import GlobalContext from "../context/GlobalContext";
 import { Nav, Tab } from "react-bootstrap";
 import Link from "next/link";
@@ -15,6 +15,8 @@ import { useMoralis, useMoralisQuery  } from 'react-moralis';
 import EditProfileSidebar from "../components/EditProfileSidebar";
 import { Moralis } from 'moralis';
 
+import { defaultProfessions } from "../api/sampleData";
+
 
 export default function BecomeProvider ({}) {
 
@@ -30,62 +32,53 @@ export default function BecomeProvider ({}) {
   const [professions, setProfessions] = useState([]);
   const [socialLinks, setSocialLinks] = useState([]);
   const [timeZone, setTimeZone] = useState('');
-  const [email, setEmail] = useState(user?.get('email'));
+  const [email, setEmail] = useState('');
   const [personalSite, setPersonalSite] = useState('');
+
+  const userState = useMemo(() => {
+    return {bio, skills, professions, timeZone, email, personalSite}
+  }, [bio, skills, professions, timeZone, email, personalSite])
 
   const router = useRouter();
 
   const query = new Moralis.Query("Services")
   
-  const defaultProfessions = [
-    { value: "Engineer", label: "Engineer" },
-    { value: "UI/UX Desginer", label: "UI/UX Desginer" },
-    { value: "Artist", label: "Artist" },
-    { value: "Writer", label: "Writer" },
-    { value: "Project Manager", label: "Project Manager" },
-    { value: "Marketer", label: "Marketer" },
-  ];
 
   useEffect( async () => {
-    if(user !== null) {
+    if(user === null) return; 
 
-      const subscription = await query.subscribe();
-      
-      query.equalTo("user_id", user.id)
-      const results = await query.find();
-  
+    setBio(user.get('bio'))
+    setProfessions(user.get('professions'))
+    setTimeZone(user.get('timeZone'))
+    setEmail(user?.get('email'))
+    setPersonalSite(user.get('personalSite'))
+    setSkills(user.get('skills'))
+    
+    query.equalTo("user_id", user.id)
+    const results = await query.find();
+    
+    await loadServices(results)
+    
+    const subscription = await query.subscribe();
+    subscription.on('create', async (object) => {
+      const results = await query.find()
       await loadServices(results)
-
-      subscription.on('create', async (object) => {
-        const results = await query.find()
-        await loadServices(results)
-      });
+    });
       
-    }
-    }
+    
+  }
   , [ isInitialized])
 
   const loadServices = async (data) => {
-
+    if(data === null) return;
     const parsedServices = []
-    for(const service of data) {
-      parsedServices.push(service.attributes)
-    }
-    
+    data.map(service => { parsedServices.push(service.attributes)})
     setServices(parsedServices)
   };
 
   const saveUserData = async () => {
     if(isAuthenticated) {
-      await setUserData({
-        email: email,
-        skills: skills,
-        timeZone:timeZone,
-        professions:professions,
-        personalSite: personalSite,
-        isProvider: true,
-        bio:bio
-      })
+      await setUserData(userState)
       router.push('/candidate-profile')
     }
     
@@ -135,7 +128,7 @@ export default function BecomeProvider ({}) {
                         className="btn btn-green text-uppercase btn-medium w-180 h-px-48 rounded-3 mr-4 w-100 ml-14 mt-6"
                         onClick={() => saveUserData()}
                     >
-                      <i class="fa fa-check px-1" aria-hidden="true"></i>
+                      <i className="fa fa-check px-1" aria-hidden="true"></i>
                             Finish registration
                     </button>  
                 </div>
@@ -166,7 +159,7 @@ export default function BecomeProvider ({}) {
                               </a>
                             </Link>
                           </h4>
-                          <p className="mb-8">
+                          <div className="mb-8">
                           <Select 
                             value={null}
                             options={defaultProfessions} 
@@ -176,7 +169,7 @@ export default function BecomeProvider ({}) {
                             className="mt-4  pl-1 h-100 arrow-3 font-size-4 d-flex align-items-center w-80" 
                             
                           />
-                          </p>
+                          </div>
                           <div className="icon-link d-flex flex-column align-items-center justify-content-center flex-wrap">
                             
                             {/* { socialLinks?.map(obj => {
@@ -235,9 +228,9 @@ export default function BecomeProvider ({}) {
                           <ul className="list-unstyled d-flex align-items-center flex-wrap">
                             {professions?.map(prof => {
                                 return (
-                                  <li>
+                                  <li key={prof}>
                                       <Link href="/#">
-                                          <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                          <a className="bg-polar text-black-2  mr-6 px-3 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                                           {prof}
                                           </a>
                                       </Link>
@@ -342,7 +335,7 @@ export default function BecomeProvider ({}) {
                                 <Select
                                     value={null}
                                     className="mt-5 w-40"
-                                    placeholder="Select Skills"
+                                    placeholder="Add Skills"
                                     options={defaultSkills}
                                     onChange={addSkill}
                                     createOptionPosition
@@ -351,7 +344,7 @@ export default function BecomeProvider ({}) {
                           <ul className="list-unstyled d-flex align-items-center flex-wrap">
                               {skills?.map(skill => {
                                   return (
-                                    <li>
+                                    <li key={skill}>
                                         <Link href="/#">
                                             <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                                             {skill}
@@ -386,7 +379,7 @@ export default function BecomeProvider ({}) {
                           {services?.map( service => {
                             return (
 
-                              <ExperienceCard service={service}/>
+                              <ExperienceCard key={service.title} service={service}/>
                             )
                             
                           })}
@@ -482,8 +475,8 @@ export default function BecomeProvider ({}) {
                   <h4 className="font-size-6 font-weight-semibold mb-0">
                     Profile Completion
                   </h4>
-                  <div class="progress mt-5">
-                    <div class="progress-bar" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                  <div className="progress mt-5">
+                    <div className="progress-bar" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                   </div>
                                     
                 </div>
