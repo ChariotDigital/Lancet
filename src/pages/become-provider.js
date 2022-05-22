@@ -4,7 +4,7 @@ import { Nav, Tab } from "react-bootstrap";
 import Link from "next/link";
 import PageWrapper from "../components/PageWrapper";
 import {Blockie} from 'web3uikit'
-import ExperienceCard from "../components/ExperienceCard/ExperienceCard"
+import ServiceCard from "../components/ServiceCard/ServiceCard"
 import  Select  from "../components/Core/Select";
 
 import { useRouter } from 'next/router';
@@ -364,7 +364,7 @@ export default function BecomeProvider ({}) {
                           {services?.map( service => {
                             return (
 
-                              <ExperienceCard key={service.title} service={service}/>
+                              <ServiceCard key={service.title} service={service}/>
                             )
                             
                           })}

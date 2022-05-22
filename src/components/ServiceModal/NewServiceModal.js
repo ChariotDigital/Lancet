@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useMemo } from "react";
 import Link from 'next/link'
 import styled from "styled-components";
 import { Modal } from "react-bootstrap";
