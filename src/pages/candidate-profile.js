@@ -3,7 +3,7 @@ import { Nav, Tab } from "react-bootstrap";
 import Link from "next/link";
 import PageWrapper from "../components/PageWrapper";
 import ProfileSidebar from "../components/ProfileSidebar";
-import ExperienceCard from "../components/ExperienceCard/ExperienceCard"
+import ServiceCard from "../components/ServiceCard/ServiceCard"
 
 import { useMoralis } from 'react-moralis';
 import { Moralis } from 'moralis';
@@ -139,7 +139,7 @@ export default function CandidateProfile () {
                           {services?.map( service => {
                             return (
 
-                              <ExperienceCard service={service}/>
+                              <ServiceCard service={service}/>
                             )
                             
                           })}
