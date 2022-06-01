@@ -1,6 +1,6 @@
 import GlobalContext from "../../context/GlobalContext";
 import imgF1 from "../../assets/image/l2/png/featured-job-logo-1.png";
-import { Tab } from "react-bootstrap";
+import HireButton from "../../components/hireButton";
 import React, {useContext}from "react";
 import {Button} from 'react-bootstrap'
 import Link from "next/link";
@@ -47,16 +47,8 @@ const ServiceDetails = (props) => {
                       <div className="col-12">
                         {/* <!-- card-btn-group start --> */}
                         <div className="card-btn-group row align-content-center ">
-                        <Button
-                              className="btn btn-green text-uppercase btn-medium rounded-3 mr-lg-4 ml-lg-6"
-                              href="/#"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                gContext.toggleApplicationModal();
-                              }}
-                            >
-                              Hire
-                            </Button>
+                        
+                              <HireButton className="btn btn-green text-uppercase btn-medium rounded-3 mr-lg-4 ml-lg-6"/>
                           <Link href="/#">
                             <a className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5">
                               <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}

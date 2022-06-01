@@ -5,7 +5,7 @@ import { useWeb3ExecuteFunction, useMoralis } from "react-moralis";
 import { Moralis } from "moralis";
 import { abi, CONTRACT_ADDRESS } from "../lib/contract-config";
 
-const HireButton = () => {
+const HireButton = (props) => {
   const { error, fetch, isFetching, isLoading } = useWeb3ExecuteFunction();
   const [txLoading, setTxLoading] = useState(false);
   const { chainId } = Moralis;
@@ -50,7 +50,7 @@ const HireButton = () => {
   };
   return (
     <>
-      <Button className="btn btn-primary btn-xl mb-7 d-block mx-auto text-uppercase" disabled={txLoading} onClick={onSubmit}>
+      <Button className={props.className? props.className : "btn btn-primary btn-xl mb-7 d-block mx-auto text-uppercase"} disabled={txLoading} onClick={onSubmit}>
         {txLoading ? <Spinner as="span" animation="border" size="lg" role="status" aria-hidden="true" /> : "Hire"}
       </Button>
     </>
