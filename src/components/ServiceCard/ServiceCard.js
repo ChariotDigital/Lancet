@@ -12,10 +12,12 @@ import iconC from "../../assets/image/svg/icon-clock.svg";
 import iconL2 from "../../assets/image/svg/icon-location.svg";
 import iconD from "../../assets/image/svg/icon-dolor.svg";
 import iconB from "../../assets/image/svg/icon-briefcase.svg";
+import ServiceContext from './../../context/ServiceContext';
 
 const ServiceCard = (props) => {
 
   const gContext = useContext(GlobalContext);
+  const serviceContext = useContext(ServiceContext)
 
     return (
         props.isList ?
@@ -64,19 +66,7 @@ const ServiceCard = (props) => {
                       </div>
                       <div className="col-md-5">
                         <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
-                          {/* <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                            <span
-                              className="mr-4"
-                              css={`
-                                margin-top: -2px;
-                              `}
-                            >
-                              <img src={iconL.src} alt="" />
-                            </span>
-                            <span className="font-weight-semibold">
-                              {props.service?.timeZone}
-                            </span>
-                          </li> */}
+                          
                           <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
                             <span
                               className="mr-4"
@@ -90,16 +80,7 @@ const ServiceCard = (props) => {
                             {props.service?.scope}
                             </span>
                           </li>
-                          {/* <li className="mt-2 mr-8 font-size-small text-black-2 d-flex">
-                            <span
-                              className="mr-4"
-                              css={`
-                                margin-top: -2px;
-                              `}
-                            >
-                              <img src={iconC.src} alt="" />
-                            </span>
-                          </li> */}
+                         
                         </ul>
                       </div>
                     </div>
@@ -144,9 +125,9 @@ const ServiceCard = (props) => {
                           <Button
                               className="btn btn-green text-uppercase btn-medium rounded-3"
                               href="/#"
-                              onClick={(e) => {
+                              onClick={ async (e) => {
                                 e.preventDefault();
-                                gContext.toggleApplicationModal();
+                                gContext.toggleApplicationModal(props.service);
                               }}
                             >
                               Hire

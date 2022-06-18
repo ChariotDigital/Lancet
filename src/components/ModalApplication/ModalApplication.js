@@ -13,6 +13,9 @@ import imgL from "../../assets/image/svg/icon-loaction-pin-black.svg";
 import HireButton from "../hireButton";
 import CancelJobButton from "../cancelJob";
 import CompleteJob from "../completeJob";
+import { useMoralis } from 'react-moralis';
+import ServiceContext from './../../context/ServiceContext';
+import ServiceDetails from './../../sections/search/ServiceDetails'
 
 const ModalStyled = styled(Modal)`
   /* &.modal {
@@ -29,12 +32,17 @@ const ModalStyled = styled(Modal)`
 
 const ModalSignIn = (props) => {
   const gContext = useContext(GlobalContext);
+  const serviceContext = useContext(ServiceContext);
+
 
   const handleClose = () => {
     gContext.toggleApplicationModal();
   };
 
+  const {user, isInitialized} = useMoralis();
+
   return (
+
     <ModalStyled {...props} size="lg" centered show={gContext.applicationModalVisible} onHide={gContext.toggleApplicationModal}>
       <Modal.Body className="p-0">
         <div className="container position-relative">
@@ -45,7 +53,7 @@ const ModalSignIn = (props) => {
             <div className="row no-gutters">
               {/* <!-- Left Sidebar Start --> */}
               <div className="col-12 col-xl-3 col-lg-4 col-md-5 mb-13 mb-lg-0 border-right border-mercury">
-                <ProfileSidebar />
+              <ProfileSidebar user={user} />
               </div>
               {/* <!-- Left Sidebar End --> */}
               {/* <!-- Middle Content --> */}
@@ -53,250 +61,37 @@ const ModalSignIn = (props) => {
                 <div className="bg-white rounded-4 overflow-auto h-1173">
                   {/* <!-- Excerpt Start --> */}
                   <div className="pr-xl-0 pr-xxl-14 p-5 px-xs-12 pt-7 pb-5">
-                    <h4 className="font-size-6 font-weight-semibold mb-7 mt-5 text-black-2">About</h4>
+                    <h4 className="font-size-6 font-weight-semibold mb-7 mt-5 text-black-2">Service Details</h4>
                     <p className="font-size-4 mb-8">
-                      A talented professional with an academic background in IT and proven commercial development experience as C++ developer since 1999. Has a sound knowledge of
-                      the software development life cycle. Was involved in more than 140 software development outsourcing projects.
-                    </p>
-                    <p className="font-size-4 mb-8">Programming Languages: C/C++, .NET C++, Python, Bash, Shell, PERL, Regular expressions, Python, Active-script.</p>
+                    {gContext.selectedService?.description}
+                  </p>
                   </div>
                   {/* <!-- Excerpt End --> */}
                   {/* <!-- Skills --> */}
                   <div className="border-top border-mercury pr-xl-0 pr-xxl-14 p-5 pl-xs-12 pt-7 pb-5">
                     <h4 className="font-size-6 font-weight-semibold mb-7 mt-5 text-black-2">Skills</h4>
                     <ul className="list-unstyled d-flex align-items-center flex-wrap">
-                      <li>
-                        <Link href="/#">
-                          <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">Agile</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/#">
-                          <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">Wireframing</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/#">
-                          <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">Prototyping</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/#">
-                          <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">Information</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/#">
-                          <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">Waterfall Model</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/#">
-                          <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">New Layout</a>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="/#">
-                          <a className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">Browsing</a>
-                        </Link>
-                      </li>
+                     {gContext.selectedService.skills?.map(skill => {
+                                return (
+                                  
+                                  <li key={skill}>
+                                    <a
+                                      href="/#"
+                                      className="bg-polar text-black-2  mr-6 px-7 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                    >
+                                      {skill}
+                                    </a>
+                                  </li>
+                                )
+                              })}
                     </ul>
                   </div>
                   {/* <!-- Skills End --> */}
                   {/* <!-- Card Section Start --> */}
-                  <div className="border-top border-mercury p-5 pl-xs-12 pt-7 pb-5">
-                    <h4 className="font-size-6 font-weight-semibold mb-7 mt-5 text-black-2">Work Exprerience</h4>
-                    {/* <!-- Single Card --> */}
-                    <div className="w-100">
-                      <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                        <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                          <img src={imgF1} alt="" />
-                        </div>
-                        <div className="w-100 mt-n2">
-                          <h3 className="mb-0">
-                            <Link href="/#">
-                              <a className="font-size-5 font-weight-semibold text-black-2">Lead Product Designer</a>
-                            </Link>
-                          </h3>
-                          <Link href="/#">
-                            <a className="font-size-4 text-default-color line-height-2">Airabnb</a>
-                          </Link>
-                          <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">Jun 2017 - April 2020- 3 years</a>
-                            </Link>
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">
-                                <span
-                                  className="mr-4"
-                                  css={`
-                                    margin-top: -2px;
-                                  `}
-                                >
-                                  <img src={imgL} alt="" />
-                                </span>
-                                New York, USA
-                              </a>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* <!-- Single Card End --> */}
-                    {/* <!-- Single Card --> */}
-                    <div className="w-100">
-                      <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                        <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                          <img src={imgF2} alt="" />
-                        </div>
-                        <div className="w-100 mt-n2">
-                          <h3 className="mb-0">
-                            <Link href="/#">
-                              <a className="font-size-5 font-weight-semibold text-black-2">Senior UI/UX Designer</a>
-                            </Link>
-                          </h3>
-                          <Link href="/#">
-                            <a className="font-size-4 text-default-color line-height-2">Google Inc</a>
-                          </Link>
-                          <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">Jun 2017 - April 2020- 3 years</a>
-                            </Link>
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">
-                                <span
-                                  className="mr-4"
-                                  css={`
-                                    margin-top: -2px;
-                                  `}
-                                >
-                                  <img src={imgL} alt="" />
-                                </span>
-                                New York, USA
-                              </a>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* <!-- Single Card End --> */}
-                  </div>
+                  
                   {/* <!-- Card Section End --> */}
                   {/* <!-- Card Section Start --> */}
-                  <div className="border-top border-mercury p-5 pl-xs-12 pt-7 pb-5">
-                    <h4 className="font-size-6 font-weight-semibold mb-7 mt-5 text-black-2">Education</h4>
-                    {/* <!-- Single Card --> */}
-                    <div className="w-100">
-                      <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                        <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                          <img src={imgF3} alt="" />
-                        </div>
-                        <div className="w-100 mt-n2">
-                          <h3 className="mb-0">
-                            <Link href="/#">
-                              <a className="font-size-5 font-weight-semibold text-black-2">Masters in Art Design</a>
-                            </Link>
-                          </h3>
-                          <Link href="/#">
-                            <a className="font-size-4 text-default-color line-height-2">Harvard University</a>
-                          </Link>
-                          <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">Jun 2017 - April 2020- 3 years</a>
-                            </Link>
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">
-                                <span
-                                  className="mr-4"
-                                  css={`
-                                    margin-top: -2px;
-                                  `}
-                                >
-                                  <img src={imgL} alt="" />
-                                </span>
-                                Brylin, USA
-                              </a>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* <!-- Single Card End --> */}
-                    {/* <!-- Single Card --> */}
-                    <div className="w-100">
-                      <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                        <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                          <img className="circle-72" src={imgF4} alt="" />
-                        </div>
-                        <div className="w-100 mt-n2">
-                          <h3 className="mb-0">
-                            <Link href="/#">
-                              <a className="font-size-5 font-weight-semibold text-black-2">Bachelor in Software Engineering </a>
-                            </Link>
-                          </h3>
-                          <Link href="/#">
-                            <a className="font-size-4 text-default-color line-height-2">Manipal Institute of Technology</a>
-                          </Link>
-                          <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">Fed 2012 - April 2016 - 4 years</a>
-                            </Link>
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">
-                                <span
-                                  className="mr-4"
-                                  css={`
-                                    margin-top: -2px;
-                                  `}
-                                >
-                                  <img src={imgL} alt="" />
-                                </span>
-                                New York, USA
-                              </a>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* <!-- Single Card End --> */}
-                    {/* <!-- Single Card --> */}
-                    <div className="w-100">
-                      <div className="d-flex align-items-center pr-11 mb-9 flex-wrap flex-sm-nowrap">
-                        <div className="square-72 d-block mr-8 mb-7 mb-sm-0">
-                          <img className="circle-72" src={imgF4} alt="" />
-                        </div>
-                        <div className="w-100 mt-n2">
-                          <h3 className="mb-0">
-                            <Link href="/#">
-                              <a className="font-size-5 font-weight-semibold text-black-2">Bachelor in Software Engineering </a>
-                            </Link>
-                          </h3>
-                          <Link href="/#">
-                            <a className="font-size-4 text-default-color line-height-2">Manipal Institute of Technology</a>
-                          </Link>
-                          <div className="d-flex align-items-center justify-content-md-between flex-wrap">
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">Fed 2012 - April 2016 - 4 years</a>
-                            </Link>
-                            <Link href="/#">
-                              <a className="font-size-3 text-gray">
-                                <span
-                                  className="mr-4"
-                                  css={`
-                                    margin-top: -2px;
-                                  `}
-                                >
-                                  <img src={imgL} alt="" />
-                                </span>
-                                New York, USA
-                              </a>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* <!-- Single Card End --> */}
-                  </div>
+                  
                   {/* <!-- Card Section End --> */}
                 </div>
               </div>

@@ -9,6 +9,7 @@ const GlobalProvider = ({ children }) => {
   const [signInModalVisible, setSignInModalVisible] = useState(false);
   const [signUpModalVisible, setSignUpModalVisible] = useState(false);
   const [newServiceModalVisible , setNewServiceModalVisible] = useState(false);
+  const [selectedService, setSelectedService] = useState(false)
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [visibleOffCanvas, setVisibleOffCanvas] = useState(false);
   const [header, setHeader] = useState({
@@ -38,7 +39,8 @@ const GlobalProvider = ({ children }) => {
     setVideoModalVisible(!videoModalVisible);
   };
 
-  const toggleApplicationModal = () => {
+  const toggleApplicationModal = (service) => {
+    setSelectedService(service)
     setApplicationModalVisible(!applicationModalVisible);
   };
 
@@ -63,6 +65,7 @@ const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
+        selectedService,
         themeDark,
         toggleTheme,
         showSidebarDashboard,

@@ -343,8 +343,8 @@ export default function BecomeProvider ({}) {
                         </div>
                         {/* <!-- Skills End --> */}
                         {/* <!-- Card Section Start --> */}
-                        <div className="border-top p-5 pl-xs-12 pt-7 pb-5">
-                            <div className='d-flex flex-row justify-content-between'>
+                        <div className="border-top p-5 pl-xs-5 pt-7 pb-5">
+                            <div className='pl-10 d-flex flex-row justify-content-between'>
 
                                 <h4 className="font-size-6 mb-7 mt-5 text-black-2 font-weight-semibold">
                                     Your Services
@@ -363,8 +363,10 @@ export default function BecomeProvider ({}) {
                           
                           {services?.map( service => {
                             return (
+                              <div className="m-3 shadow" > 
 
-                              <ServiceCard key={service.title} service={service}/>
+                                <ServiceCard key={service.title} service={service} isList={true}/>
+                              </div>
                             )
                             
                           })}

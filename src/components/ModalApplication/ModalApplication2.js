@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { Modal } from "react-bootstrap";
 import GlobalContext from "../../context/GlobalContext";
 import ProfileSidebar from "../ProfileSidebar";
+import { useMoralis } from 'react-moralis';
+import { useRouter } from 'next/router';
+
 
 const ModalStyled = styled(Modal)`
   /* &.modal {
@@ -16,6 +19,10 @@ const ModalApplication = (props) => {
   const toggleModal = () => {
     gContext.toggleApplicationModal();
   };
+
+  const {user, isInitialized} = useMoralis();
+
+
 
   return (
     <>
@@ -40,7 +47,7 @@ const ModalApplication = (props) => {
           <div className="row no-gutters">
             {/* <!-- Left Sidebar Start --> */}
             <div className="col-12 col-xl-3 col-lg-4 col-md-5 mb-13 mb-lg-0 border-right border-mercury">
-              <ProfileSidebar />
+              <ProfileSidebar user={user} />
             </div>
             {/* <!-- Left Sidebar End --> */}
             {/* <!-- Middle Content --> */}
