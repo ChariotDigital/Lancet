@@ -18,13 +18,17 @@ import "../assets/fonts/fontawesome-5/css/all.css";
 import "../scss/bootstrap.scss";
 import "../scss/main.scss";
 
+const MORALIS_APP_ID = "RmVdfh23vtdHAZhQQEA733oZ34I0cMQF1fXtQcYl";
+const MORALIS_SERVER_URL = "https://pytiagqbqthu.usemoralis.com:2053/server";
+
+
 const MyApp = ({ Component, pageProps, router }) => {
   if (router.pathname.match(/404/)) {
     return (
       <GlobalProvider>
         <MoralisProvider 
-                serverUrl={'https://r0us9wvsjpcz.usemoralis.com:2053/server'} 
-                appId={'3JsMeS2qY0F2rFmhlby9OMMAuO6RHrlImWd0rK2R'}
+                serverUrl={MORALIS_SERVER_URL} 
+                appId={MORALIS_APP_ID}
             > 
         <Layout pageContext={{ layout: "bare" }}>
           <Component {...pageProps} />
@@ -37,8 +41,8 @@ const MyApp = ({ Component, pageProps, router }) => {
     return (
       <GlobalProvider>
          <MoralisProvider 
-                serverUrl={'https://r0us9wvsjpcz.usemoralis.com:2053/server'} 
-                appId={'3JsMeS2qY0F2rFmhlby9OMMAuO6RHrlImWd0rK2R'}
+                serverUrl={MORALIS_SERVER_URL} 
+                appId={MORALIS_APP_ID}
             > 
           <Layout pageContext={{ layout: "dashboard" }}>
             <Component {...pageProps} />
@@ -52,8 +56,8 @@ const MyApp = ({ Component, pageProps, router }) => {
   return (
     <GlobalProvider>
       <MoralisProvider 
-                serverUrl={'https://r0us9wvsjpcz.usemoralis.com:2053/server'} 
-                appId={'3JsMeS2qY0F2rFmhlby9OMMAuO6RHrlImWd0rK2R'}
+                serverUrl={MORALIS_SERVER_URL} 
+                appId={MORALIS_APP_ID}
             > 
           <Layout pageContext={{}}>
             <Component {...pageProps} />
