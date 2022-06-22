@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Container, Dropdown } from "react-bootstrap";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import Link from "next/link";
-import ConnectButton from "../WalletConnect/ConnectButton";
 import { useMoralis } from "react-moralis";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import GlobalContext from "../../context/GlobalContext";
@@ -50,10 +49,7 @@ const Header = () => {
   const gContext = useContext(GlobalContext);
   const [showScrolling, setShowScrolling] = useState(false);
   const [showReveal, setShowReveal] = useState(false);
-  const {isAuthenticated, user} = useMoralis();
-
-
-
+  const { isAuthenticated, user } = useMoralis();
 
   const size = useWindowSize();
 
@@ -69,8 +65,6 @@ const Header = () => {
       setShowReveal(false);
     }
   });
-
-
 
   return (
     <>
@@ -92,9 +86,22 @@ const Header = () => {
               <div className="navbar-nav-wrapper">
                 <ul className="navbar-nav main-menu d-none d-lg-flex">
                   <li>
-                    <a className="nav-link dropdown-toggle gr-toggle-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/">
-                      Home
-                    </a>
+                    {user ? (
+                      <a
+                        className="nav-link dropdown-toggle gr-toggle-arrow"
+                        role="button"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        href="/dashboard-main"
+                      >
+                        Dashboard
+                      </a>
+                    ) : (
+                      <a className="nav-link dropdown-toggle gr-toggle-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/">
+                        Home
+                      </a>
+                    )}
                   </li>
                   <li>
                     <a className="nav-link dropdown-toggle gr-toggle-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/search-list-2">
@@ -106,7 +113,6 @@ const Header = () => {
                       FAQ
                     </a>
                   </li>
-                  
                 </ul>
               </div>
             </div>
@@ -119,45 +125,34 @@ const Header = () => {
               </div>
             )}
             <span>{isAuthenticated} </span>
-            {
-              isAuthenticated ? 
-                  (
-    
-                  <ProfileBadge/>
-                ) : 
-
-
-                gContext.header.button === "account" && (
-                  <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
-                    <a
-                      className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-                      href="/dashboard-main"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        gContext.toggleSignInModal();
-                      }}
-                    >
-                      Log In
-                    </a>
-                    <a
-                      className="btn btn-success text-uppercase font-size-3 heading-default-color focus-reset"
-                      href="/dashboard-main"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        gContext.toggleSignUpModal();
-                      }}
-                    >
-                      Sign Up
-                    </a>
-                   
-                    
-                    
-                  </div>
-                )
-                 
-          }
-
-          
+            {isAuthenticated ? (
+              <ProfileBadge />
+            ) : (
+              gContext.header.button === "account" && (
+                <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
+                  <a
+                    className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+                    href="/dashboard-main"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      gContext.toggleSignInModal();
+                    }}
+                  >
+                    Log In
+                  </a>
+                  <a
+                    className="btn btn-success text-uppercase font-size-3 heading-default-color focus-reset"
+                    href="/dashboard-main"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      gContext.toggleSignUpModal();
+                    }}
+                  >
+                    Sign Up
+                  </a>
+                </div>
+              )
+            )}
 
             <ToggleButton
               className={`navbar-toggler btn-close-off-canvas ml-3 ${gContext.visibleOffCanvas ? "collapsed" : ""}`}
