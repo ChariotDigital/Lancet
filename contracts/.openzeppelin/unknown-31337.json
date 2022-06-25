@@ -1,0 +1,245 @@
+{
+  "manifestVersion": "3.2",
+  "admin": {
+    "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "txHash": "0xccf8a4a28f866696836331bd8f32d82afaf8a2f5e235f375d2c832b3dc050125"
+  },
+  "proxies": [
+    {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0x3c9901e1b77859d21b314954ec3d3eee6cbe5ffbcc85f56db05685b3790f86c8",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "txHash": "0x9998a01682ce1344aedca05813d537384cc3d3c4702cf577bdbdbcb80d4bcfeb",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "4fc1d1039be77d9f8db139dcc87d8d764305b1d87211fb8e8dc7e87ba53da95d": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0xe008d5f9bf23eef6aa8a14d88ac588643d10f0a96777afe7a54638f432dfa570",
+      "layout": {
+        "storage": [
+          {
+            "label": "s_jobID",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "Lancet",
+            "src": "contracts\\lancet.sol:14"
+          },
+          {
+            "label": "runningJobs",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "Lancet",
+            "src": "contracts\\lancet.sol:15"
+          },
+          {
+            "label": "contractBalance",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256",
+            "contract": "Lancet",
+            "src": "contracts\\lancet.sol:16"
+          },
+          {
+            "label": "s_platformFee",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256",
+            "contract": "Lancet",
+            "src": "contracts\\lancet.sol:17"
+          },
+          {
+            "label": "owner",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_address",
+            "contract": "Lancet",
+            "src": "contracts\\lancet.sol:19"
+          },
+          {
+            "label": "jobs",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_struct(Job)215_storage)",
+            "contract": "Lancet",
+            "src": "contracts\\lancet.sol:21"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint256,t_struct(Job)215_storage)": {
+            "label": "mapping(uint256 => struct Lancet.Job)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Job)215_storage": {
+            "label": "struct Lancet.Job",
+            "members": [
+              {
+                "label": "provider",
+                "type": "t_address_payable",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "buyer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "complete",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    },
+    "79d14803deb7deb121d92e209efd4ba9f50aa31e01b3b6e3248d4571df6f6d0e": {
+      "address": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "txHash": "0x1bceb2058d60360f10939fb70deb391c9b34996ccde3a346b936c54d5adbc4ad",
+      "layout": {
+        "storage": [
+          {
+            "label": "s_jobID",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint256",
+            "contract": "LancetV2",
+            "src": "contracts\\lancetV2.sol:14"
+          },
+          {
+            "label": "runningJobs",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_uint256",
+            "contract": "LancetV2",
+            "src": "contracts\\lancetV2.sol:15"
+          },
+          {
+            "label": "contractBalance",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint256",
+            "contract": "LancetV2",
+            "src": "contracts\\lancetV2.sol:16"
+          },
+          {
+            "label": "s_platformFee",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256",
+            "contract": "LancetV2",
+            "src": "contracts\\lancetV2.sol:17"
+          },
+          {
+            "label": "owner",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_address",
+            "contract": "LancetV2",
+            "src": "contracts\\lancetV2.sol:19"
+          },
+          {
+            "label": "jobs",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_struct(Job)543_storage)",
+            "contract": "LancetV2",
+            "src": "contracts\\lancetV2.sol:21"
+          },
+          {
+            "label": "upgradeTestVal",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_bool",
+            "contract": "LancetV2",
+            "src": "contracts\\lancetV2.sol:24"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_address_payable": {
+            "label": "address payable",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_uint256,t_struct(Job)543_storage)": {
+            "label": "mapping(uint256 => struct LancetV2.Job)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Job)543_storage": {
+            "label": "struct LancetV2.Job",
+            "members": [
+              {
+                "label": "provider",
+                "type": "t_address_payable",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "buyer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "amount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "complete",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        }
+      }
+    }
+  }
+}
