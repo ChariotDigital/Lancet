@@ -54,7 +54,7 @@ export default function DashboardMain (){
                       </LazyLoad>
                     </h5>
                     <p className="font-size-4 font-weight-normal text-gray mb-0">
-                      Posted Jobs
+                      Running  Jobs
                     </p>
                   </div>
                 </a>

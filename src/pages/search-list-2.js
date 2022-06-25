@@ -52,7 +52,7 @@ export default function SearchListTwo () {
   useEffect( async () => {
     if(user === null) return; 
     
-    query.equalTo("user_id", user.id)
+    
     const results = await query.find();
     
     await loadServices(results)

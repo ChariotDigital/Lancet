@@ -28,10 +28,11 @@ export default function BecomeProvider ({}) {
   const [timeZone, setTimeZone] = useState('');
   const [email, setEmail] = useState('');
   const [personalSite, setPersonalSite] = useState('');
+  const [isProvider, setIsProvider] = useState(true);
 
   const userState = useMemo(() => {
-    return {bio, skills, professions, timeZone, email, personalSite}
-  }, [bio, skills, professions, timeZone, email, personalSite])
+    return {bio, skills, professions, timeZone, email, personalSite, isProvider}
+  }, [bio, skills, professions, timeZone, email, personalSite, isProvider])
 
   const router = useRouter();
 
@@ -146,7 +147,7 @@ export default function BecomeProvider ({}) {
                           </h4>
                           <div className="mb-8">
                           <Select 
-                            value={null}
+                            value={professions.length ? professions: null}
                             options={defaultProfessions} 
                             defaultValue={null} 
                             onChange={(e) => addProfession(e)} 
