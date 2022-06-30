@@ -11,6 +11,8 @@ const GlobalProvider = ({ children }) => {
   const [newServiceModalVisible , setNewServiceModalVisible] = useState(false);
   const [videoModalVisible, setVideoModalVisible] = useState(false);
   const [visibleOffCanvas, setVisibleOffCanvas] = useState(false);
+
+
   const [header, setHeader] = useState({
     theme: "light",
     bgClass: "default",

@@ -1,13 +1,40 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
-import PageWrapper from "../components/PageWrapper";
+import PageWrapper from "../../components/PageWrapper";
 
-import imgF1 from "../assets/image/l2/png/featured-job-logo-1.png";
-import iconD from "../assets/image/svg/icon-dolor.svg";
-import iconB from "../assets/image/svg/icon-briefcase.svg";
-import iconL from "../assets/image/svg/icon-location.svg";
+import imgF1 from "../../assets/image/l2/png/featured-job-logo-1.png";
+import iconD from "../../assets/image/svg/icon-dolor.svg";
+import iconB from "../../assets/image/svg/icon-briefcase.svg";
+import iconL from "../../assets/image/svg/icon-location.svg";
+import { Moralis } from 'moralis';
+import { useMoralis } from 'react-moralis';
+import HireButton from "../../components/hireButton";
+import CancelJobButton from "../../components/cancelJob";
+import CompleteJob from "../../components/completeJob";
+import { useRouter } from "next/router";
 
-export default function JobDetails (){
+export default function ServiceDetails (){
+  const {user, isInitialized} = useMoralis();
+
+  const serviceQuery = new Moralis.Query('Services')
+  const userQuery = new Moralis.Query(Moralis.User);
+  const router = useRouter();
+
+  const { sid } = router.query
+  const [service, setService] = useState({})
+  const [provder_user, setProviderUser] = useState({})
+  
+  useEffect( async () => {
+    console.log('service ID: ', sid);
+    serviceQuery.equalTo('objectId', sid)
+    const selectedService = await serviceQuery.first()
+    console.log(selectedService)
+    setService(selectedService.attributes)
+    userQuery.matchesKeyInQuery("user_id", "objectId", serviceQuery);
+    const providers = await userQuery.first();
+
+  }, [isInitialized])
+
   return (
     <>
       <PageWrapper headerConfig={{ button: "profile" }}>
@@ -44,10 +71,10 @@ export default function JobDetails (){
                           {/* <!-- media texts start --> */}
                           <div>
                             <h3 className="font-size-6 mb-0">
-                              Product Designer
+                              {service?.title}
                             </h3>
                             <span className="font-size-3 text-gray line-height-2">
-                              AirBnb
+                            {service?.category}
                             </span>
                           </div>
                           {/* <!-- media texts end --> */}
@@ -58,7 +85,7 @@ export default function JobDetails (){
                         {/* <!-- media date start --> */}
                         <div className="media justify-content-md-end">
                           <p className="font-size-4 text-gray mb-0">
-                            19 June 2020
+                            {/* {service?.updatedAt} */}
                           </p>
                         </div>
                         {/* <!-- media date end --> */}
@@ -68,17 +95,13 @@ export default function JobDetails (){
                       <div className="col-12">
                         {/* <!-- card-btn-group start --> */}
                         <div className="card-btn-group">
-                          <Link href="/#">
-                            <a className="btn btn-green text-uppercase btn-medium rounded-3 w-180 mr-4 mb-5">
-                              Apply to this job
-                            </a>
-                          </Link>
-                          <Link href="/#">
-                            <a className="btn btn-outline-mercury text-black-2 text-uppercase h-px-48 rounded-3 mb-5 px-5">
-                              <i className="icon icon-bookmark-2 font-weight-bold mr-4 font-size-4"></i>{" "}
-                              Save job
-                            </a>
-                          </Link>
+                        <div className="col-12 col-xl-3 order-3 order-lg-2 bg-default-2">
+                          <div className="text-center mb-13 mb-lg-0 mt-12">
+                            <HireButton />
+                            <CompleteJob />
+                            <CancelJobButton />
+                          </div>
+                        </div>
                         </div>
                         {/* <!-- card-btn-group end --> */}
                       </div>
@@ -93,7 +116,7 @@ export default function JobDetails (){
                             <img src={iconD.src} alt="" />
                           </div>
                           <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
-                            80-90K PLN
+                          {`${service?.amount / 1e18} ETH`}
                           </p>
                         </div>
                       </div>
@@ -103,7 +126,7 @@ export default function JobDetails (){
                             <img src={iconB.src} alt="" />
                           </div>
                           <p className="font-weight-semibold font-size-5 text-black-2 mb-0">
-                            Full-Time
+                            {service.scope}
                           </p>
                         </div>
                       </div>

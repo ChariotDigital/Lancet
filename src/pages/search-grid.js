@@ -118,7 +118,7 @@ export default function SearchGrid() {
                           return(
                             <div className="col-12 col-lg-6">
 
-                            <ServiceCard key={service.id} service={service.attributes}/> 
+                            <ServiceCard key={service.id} service={{id: service.id, ...service.attributes}}/> 
                             </div>
                           )
 
