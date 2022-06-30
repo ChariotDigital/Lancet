@@ -41,13 +41,16 @@ export default function BecomeProvider ({}) {
 
   useEffect( async () => {
     if(user === null) return; 
+    if(user.get("isProvider")) {
 
-    setBio(user.get('bio'))
-    setProfessions(user.get('professions'))
-    setTimeZone(user.get('timeZone'))
-    setEmail(user?.get('email'))
-    setPersonalSite(user.get('personalSite'))
-    setSkills(user.get('skills'))
+      setBio(user.get('bio'))
+      setProfessions(user.get('professions'))
+      setTimeZone(user.get('timeZone'))
+      setEmail(user?.get('email'))
+      setPersonalSite(user.get('personalSite'))
+      setSkills(user.get('skills'))
+    }
+
     
     query.equalTo("user_id", user.id)
     const results = await query.find();
