@@ -35,7 +35,7 @@ const HireButton = () => {
     };
     fetch({
       params: options,
-      onError: (err) => {
+      onError: (err) => {5
         alert(err.error ? err.error.message : err.message);
         setTxLoading(false);
       },

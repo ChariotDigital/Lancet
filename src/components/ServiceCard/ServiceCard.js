@@ -4,6 +4,7 @@ import React, {useContext} from 'react'
 import Link from "next/link";
 import GlobalContext from "../../context/GlobalContext";
 import { Button } from "react-bootstrap";
+import { useMoralis } from "react-moralis";
 
 import imgF from "../../assets/image/svg/icon-fire-rounded.svg";
 import iconL from "../../assets/image/svg/icon-loaction-pin-black.svg";
@@ -16,6 +17,7 @@ import iconB from "../../assets/image/svg/icon-briefcase.svg";
 const ServiceCard = (props) => {
 
   const gContext = useContext(GlobalContext);
+  const {user} = useMoralis()
 
     return (
         props.isList ?

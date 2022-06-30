@@ -104,7 +104,7 @@ const Header = () => {
                     )}
                   </li>
                   <li>
-                    <a className="nav-link dropdown-toggle gr-toggle-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/search-list-2">
+                    <a className="nav-link dropdown-toggle gr-toggle-arrow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/search-grid">
                       Search
                     </a>
                   </li>
