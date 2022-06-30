@@ -35,7 +35,7 @@ const HireButton = () => {
     };
     fetch({
       params: options,
-      onError: (err) => {
+      onError: (err) => {5
         alert(err.error ? err.error.message : err.message);
         setTxLoading(false);
       },
@@ -43,7 +43,7 @@ const HireButton = () => {
         setTxLoading(true);
         tx.wait().then(() => {
           setTxLoading(false);
-          notifySuccess("Transaction Completed");
+          // notifySuccess("Transaction Completed");
         });
       },
     });

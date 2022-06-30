@@ -28,10 +28,11 @@ export default function BecomeProvider ({}) {
   const [timeZone, setTimeZone] = useState('');
   const [email, setEmail] = useState('');
   const [personalSite, setPersonalSite] = useState('');
+  const [isProvider, setIsProvider] = useState(true);
 
   const userState = useMemo(() => {
-    return {bio, skills, professions, timeZone, email, personalSite}
-  }, [bio, skills, professions, timeZone, email, personalSite])
+    return {bio, skills, professions, timeZone, email, personalSite, isProvider}
+  }, [bio, skills, professions, timeZone, email, personalSite, isProvider])
 
   const router = useRouter();
 
@@ -40,13 +41,16 @@ export default function BecomeProvider ({}) {
 
   useEffect( async () => {
     if(user === null) return; 
+    if(user.get("isProvider")) {
 
-    setBio(user.get('bio'))
-    setProfessions(user.get('professions'))
-    setTimeZone(user.get('timeZone'))
-    setEmail(user?.get('email'))
-    setPersonalSite(user.get('personalSite'))
-    setSkills(user.get('skills'))
+      setBio(user.get('bio'))
+      setProfessions(user.get('professions'))
+      setTimeZone(user.get('timeZone'))
+      setEmail(user?.get('email'))
+      setPersonalSite(user.get('personalSite'))
+      setSkills(user.get('skills'))
+    }
+
     
     query.equalTo("user_id", user.id)
     const results = await query.find();
@@ -146,7 +150,7 @@ export default function BecomeProvider ({}) {
                           </h4>
                           <div className="mb-8">
                           <Select 
-                            value={null}
+                            value={professions.length ? professions: null}
                             options={defaultProfessions} 
                             defaultValue={null} 
                             onChange={(e) => addProfession(e)} 

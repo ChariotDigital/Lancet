@@ -30,7 +30,6 @@ export default function SearchGrid() {
   useEffect( async () => {
     if(user === null) return; 
     
-    query.equalTo("user_id", user.id)
     const results = await query.find();
     
     await loadServices(results)
@@ -119,7 +118,7 @@ export default function SearchGrid() {
                           return(
                             <div className="col-12 col-lg-6">
 
-                            <ServiceCard key={service.id} service={service.attributes}/> 
+                            <ServiceCard key={service.id} service={{id: service.id, ...service.attributes}}/> 
                             </div>
                           )
 

@@ -38,7 +38,7 @@ const CancelJobButton = () => {
         setTxLoading(true);
         tx.wait().then(() => {
           setTxLoading(false);
-          notifySuccess("Transaction Completed");
+          // notifySuccess("Transaction Completed");
         });
       },
     });

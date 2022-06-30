@@ -53,7 +53,7 @@ const resetValues = () => {
 
 const saveNewService = async () => {
 
-    save(serviceState, {
+    save({...serviceState, user_id : user.id}, {
       onSuccess: (service) => {
         // Execute any logic that should take place after the object is saved.
         alert("New service created with objectId: " + service.id);
@@ -148,7 +148,7 @@ const saveNewService = async () => {
                     <div className="row mb-7">
                       <div className="col-md-4 mb-md-0 mb-6">
                         <div className="media justify-content-md-start">
-                        <div classname="input-group mb-3">
+                        <div classname="input-group mb-3 d-flex">
                         <span className="input-group-text p-3 h-50">$</span>
                         <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} className="form-control" placeholder="Price" aria-label="Amount"/>
                         </div>

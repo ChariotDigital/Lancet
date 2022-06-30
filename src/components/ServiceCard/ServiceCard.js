@@ -4,6 +4,8 @@ import React, {useContext} from 'react'
 import Link from "next/link";
 import GlobalContext from "../../context/GlobalContext";
 import { Button } from "react-bootstrap";
+import { useMoralis } from "react-moralis";
+import { useRouter } from "next/router";
 
 import imgF from "../../assets/image/svg/icon-fire-rounded.svg";
 import iconL from "../../assets/image/svg/icon-loaction-pin-black.svg";
@@ -16,6 +18,8 @@ import iconB from "../../assets/image/svg/icon-briefcase.svg";
 const ServiceCard = (props) => {
 
   const gContext = useContext(GlobalContext);
+  const {user} = useMoralis();
+  const router = useRouter();
 
     return (
         props.isList ?
@@ -146,10 +150,10 @@ const ServiceCard = (props) => {
                               href="/#"
                               onClick={(e) => {
                                 e.preventDefault();
-                                gContext.toggleApplicationModal();
+                                router.push(`/service-details/${props.service.id}`)
                               }}
                             >
-                              Hire
+                              View
                             </Button>
                             <Link href="/#">
                               <a className="btn btn-outline-mercury text-black-2 text-uppercase btn-medium rounded-3">

@@ -1,0 +1,307 @@
+{
+  "version": "3.2",
+  "log": [
+    {
+      "Strings": {
+        "src": "@openzeppelin\\contracts\\utils\\Strings.sol:9",
+        "version": {
+          "withMetadata": "ca53a301e49ca11c828e93d5f301ee7c04387b1b47971b794adcd0527f10e1f6",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Lancet": {
+        "src": "contracts\\lancet.sol:6",
+        "version": {
+          "withMetadata": "f1fc4a09ca333c89bcb50f9b34fb51e9ff8bd622543e25873401517977390ed9",
+          "withoutMetadata": "4fc1d1039be77d9f8db139dcc87d8d764305b1d87211fb8e8dc7e87ba53da95d",
+          "linkedWithoutMetadata": "4fc1d1039be77d9f8db139dcc87d8d764305b1d87211fb8e8dc7e87ba53da95d"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "initialize(uint256)",
+          "createJob(address payable,address,uint256)",
+          "cancelJob(uint256)",
+          "releaseFunds(uint256)",
+          "setPlatformFee(uint256)",
+          "emergancyRelease(uint256,address payable)",
+          "withdraw(address payable)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "s_jobID",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint256",
+              "contract": "Lancet",
+              "src": "contracts\\lancet.sol:14"
+            },
+            {
+              "label": "runningJobs",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "Lancet",
+              "src": "contracts\\lancet.sol:15"
+            },
+            {
+              "label": "contractBalance",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "Lancet",
+              "src": "contracts\\lancet.sol:16"
+            },
+            {
+              "label": "s_platformFee",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_uint256",
+              "contract": "Lancet",
+              "src": "contracts\\lancet.sol:17"
+            },
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_address",
+              "contract": "Lancet",
+              "src": "contracts\\lancet.sol:19"
+            },
+            {
+              "label": "jobs",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_uint256,t_struct(Job)215_storage)",
+              "contract": "Lancet",
+              "src": "contracts\\lancet.sol:21"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_address_payable": {
+              "label": "address payable",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_uint256,t_struct(Job)215_storage)": {
+              "label": "mapping(uint256 => struct Lancet.Job)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Job)215_storage": {
+              "label": "struct Lancet.Job",
+              "members": [
+                {
+                  "label": "provider",
+                  "type": "t_address_payable",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "buyer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "complete",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "3"
+                }
+              ],
+              "numberOfBytes": "128"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "LancetV2": {
+        "src": "contracts\\lancetV2.sol:6",
+        "version": {
+          "withMetadata": "66900c836fd1b0a8360ec90bd54fb37c04ab7f081314e7d38e3d4b13cd140137",
+          "withoutMetadata": "79d14803deb7deb121d92e209efd4ba9f50aa31e01b3b6e3248d4571df6f6d0e",
+          "linkedWithoutMetadata": "79d14803deb7deb121d92e209efd4ba9f50aa31e01b3b6e3248d4571df6f6d0e"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "initialize(uint256)",
+          "createJob(address payable,address,uint256)",
+          "cancelJob(uint256)",
+          "releaseFunds(uint256)",
+          "setPlatformFee(uint256)",
+          "emergancyRelease(uint256,address payable)",
+          "withdraw(address payable)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "label": "s_jobID",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint256",
+              "contract": "LancetV2",
+              "src": "contracts\\lancetV2.sol:14"
+            },
+            {
+              "label": "runningJobs",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "LancetV2",
+              "src": "contracts\\lancetV2.sol:15"
+            },
+            {
+              "label": "contractBalance",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "LancetV2",
+              "src": "contracts\\lancetV2.sol:16"
+            },
+            {
+              "label": "s_platformFee",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_uint256",
+              "contract": "LancetV2",
+              "src": "contracts\\lancetV2.sol:17"
+            },
+            {
+              "label": "owner",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_address",
+              "contract": "LancetV2",
+              "src": "contracts\\lancetV2.sol:19"
+            },
+            {
+              "label": "jobs",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_uint256,t_struct(Job)543_storage)",
+              "contract": "LancetV2",
+              "src": "contracts\\lancetV2.sol:21"
+            },
+            {
+              "label": "upgradeTestVal",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_bool",
+              "contract": "LancetV2",
+              "src": "contracts\\lancetV2.sol:24"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_address_payable": {
+              "label": "address payable",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_uint256,t_struct(Job)543_storage)": {
+              "label": "mapping(uint256 => struct LancetV2.Job)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(Job)543_storage": {
+              "label": "struct LancetV2.Job",
+              "members": [
+                {
+                  "label": "provider",
+                  "type": "t_address_payable",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "buyer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "complete",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "3"
+                }
+              ],
+              "numberOfBytes": "128"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "console": {
+        "src": "hardhat\\console.sol:4",
+        "version": {
+          "withMetadata": "009ee2bffef22a104e4e5fdbaba944b6e14a227b940f3bff129c723f79743f9f",
+          "withoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff",
+          "linkedWithoutMetadata": "08d24783a787f8a51dea0c166bb6f91a4f0865e02d03d749f102d332e6ead0ff"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      }
+    }
+  ]
+}

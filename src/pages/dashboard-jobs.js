@@ -43,7 +43,7 @@ export default function DashboardJobs () {
                 </div>
               </div>
               <div className="bg-white shadow-8 pt-7 rounded pb-9 px-11">
-                <div className="table-responsive ">
+                {/* <div className="table-responsive ">
                   <table className="table table-striped">
                     <thead>
                       <tr>
@@ -290,7 +290,7 @@ export default function DashboardJobs () {
                       </tr>
                     </tbody>
                   </table>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
